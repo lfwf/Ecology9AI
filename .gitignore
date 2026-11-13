@@ -35,3 +35,6 @@ source-roots.json
 *.html
 .DS_Store
 Thumbs.db
+
+# Optional external-platform packaging is maintained separately
+/workbuddy-experts/

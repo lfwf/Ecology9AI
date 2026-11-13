@@ -94,7 +94,7 @@ def write_overview(root,environment):
     body+='<p>离线核对时间：'+cell(result['checked_at'])+'。九类均有成功批次：'+cell(result['all_categories_present'])+'；保存来源一致：'+cell(result['single_captured_source'])+'。</p>'
     body+=table(['类别','内容','审核状态','成功批次','原采集结束','来源数','已核验文件数'],rows)+details
     body+='<h2>更新与边界</h2><p>先按类别复用run.py refresh，再运行overview.py重建本页。上游改变时按依赖顺序更新，缺口留待校准。B05-L01旧流程模板检查仍需单独执行，主刷新尚未自动包含。</p>'
-    body+='<p>V_JDSX定义、完整状态码、节点轮次与历史覆盖等以各类目录为准。这里没有读取具体业务单据，也没有建立MCP、数据库WorkBuddy入口、自动调度或逐字段机器校准规则库。</p>'
+    body+='<p>V_JDSX定义、完整状态码、节点轮次与历史覆盖等以各类目录为准。这里没有读取具体业务单据，也没有建立MCP、数据库智能体入口、自动调度或逐字段机器校准规则库。</p>'
     text='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OA基础数据总目录</title><style>body{font:16px/1.7 system-ui;margin:28px;color:#18222b}table{border-collapse:collapse;font-size:14px}td,th{border:1px solid #ccd3da;padding:7px;vertical-align:top;text-align:left}th{background:#edf2f6}.scroll{overflow:auto}pre{white-space:pre-wrap}h2{margin-top:36px}a{color:#155a91}</style>'+body+'</html>'
     out=base/'基础数据总目录.html'
     tmp=base/('.overview-'+__import__('uuid').uuid4().hex+'.html');tmp.write_text(text,'utf-8');tmp.replace(out)

@@ -11,7 +11,6 @@
 | [基础数据体系](tools/oa-foundation/README.md) | B01—B09读取登记、不可覆盖批次、结构关联、变化比较及人工审核 |
 | [只读数据库工具](tools/oa-readonly-db/README.md) | SQL Server连接检查、本机加密凭据、元数据读取 |
 | [通用审查逻辑](tools/oa-audit/README.md) | 单流程配置取证、公式字段核对、分支候选检查及AI输出白名单 |
-| [WorkBuddy专家](workbuddy-experts/DEVELOPMENT.md) | 流程分析专家源码、打包和包完整性验证 |
 
 业务流程各自的取数范围、字段语义和异常规则，由部署方按自己的配置扩展。仓库包含通用工具与合成测试，不包含企业流程报告、真实配置快照、业务记录、连接参数或个人提交历史。
 
@@ -47,9 +46,7 @@ Python 3.10+。离线解析可跨平台使用；数据库采集和DPAPI凭据需
 
     python tools/oa-workflow-analyzer/package_skill.py
     python tools/oa-module-analyzer/package_skill.py
-    python workbuddy-experts/build_expert.py --check
 
-WorkBuddy的作者字段使用项目占位身份。自行发布专家时，将其改为你有权公开的维护者信息。
 
 ## 分析方法
 

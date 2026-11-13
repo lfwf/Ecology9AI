@@ -2,7 +2,7 @@
 import json,subprocess,sys,os
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-SUITES=['tools/oa-workflow-analyzer','tools/oa-module-analyzer','tools/oa-foundation','tools/oa-audit','workbuddy-experts','scripts']
+SUITES=['tools/oa-workflow-analyzer','tools/oa-module-analyzer','tools/oa-foundation','tools/oa-audit','scripts']
 def main():
  logdir=ROOT/'.local/test-logs';logdir.mkdir(parents=True,exist_ok=True);results=[]
  env={**os.environ,'PYTHONUTF8':'1','PYTHONIOENCODING':'utf-8','PYTHONPATH':str(ROOT/'tools/oa-workflow-analyzer/src')+os.pathsep+os.environ.get('PYTHONPATH','')}
