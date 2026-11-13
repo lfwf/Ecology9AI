@@ -1,0 +1,1031 @@
+{
+  "category": "B04",
+  "name": "审核人与字段权限",
+  "method_version": "1.0.0",
+  "normalization_version": "1.0.0",
+  "scope": "B01_static_nodes_operator_definitions_field_permissions_referenced_role_org_minimal_personnel_no_workitems",
+  "reader": "readers/Read-RegisteredConfig.ps1",
+  "report_file": "B04审核人与字段权限.html",
+  "dependencies": [
+    "B01",
+    "B02",
+    "B03"
+  ],
+  "limits": {
+    "page_size": 500,
+    "query_timeout_seconds": 10,
+    "read_budget_seconds": 300,
+    "process_timeout_seconds": 330,
+    "max_rows_per_source": 300000
+  },
+  "sources": {
+    "workflow_flownode": {
+      "columns": {
+        "workflowid": {
+          "source_name": "workflowid",
+          "data_type": "int"
+        },
+        "nodeid": {
+          "source_name": "nodeid",
+          "data_type": "int"
+        },
+        "nodetype": {
+          "source_name": "nodetype",
+          "data_type": "char"
+        },
+        "IsFreeWorkflow": {
+          "source_name": "IsFreeWorkflow",
+          "data_type": "char"
+        },
+        "drawbackflag": {
+          "source_name": "drawbackflag",
+          "data_type": "char"
+        },
+        "rejectbackflag": {
+          "source_name": "rejectbackflag",
+          "data_type": "char"
+        },
+        "ruleRelationship": {
+          "source_name": "ruleRelationship",
+          "data_type": "char"
+        },
+        "UseExceptionHandle": {
+          "source_name": "UseExceptionHandle",
+          "data_type": "char"
+        },
+        "ExceptionHandleWay": {
+          "source_name": "ExceptionHandleWay",
+          "data_type": "char"
+        },
+        "FlowToAssignNode": {
+          "source_name": "FlowToAssignNode",
+          "data_type": "int"
+        },
+        "isRejectRemind": {
+          "source_name": "isRejectRemind",
+          "data_type": "char"
+        },
+        "isChangRejectNode": {
+          "source_name": "isChangRejectNode",
+          "data_type": "char"
+        },
+        "isSelectRejectNode": {
+          "source_name": "isSelectRejectNode",
+          "data_type": "int"
+        },
+        "rejectableNodes": {
+          "source_name": "rejectableNodes",
+          "data_type": "text"
+        },
+        "rejecttocreater": {
+          "source_name": "rejecttocreater",
+          "data_type": "int"
+        },
+        "rejectToCreateNode": {
+          "source_name": "rejectToCreateNode",
+          "data_type": "char"
+        },
+        "isSubmitDirectNode": {
+          "source_name": "isSubmitDirectNode",
+          "data_type": "char"
+        },
+        "selectNextFlow": {
+          "source_name": "selectNextFlow",
+          "data_type": "int"
+        },
+        "selectNextFlowType": {
+          "source_name": "selectNextFlowType",
+          "data_type": "int"
+        },
+        "selectNextFlowNode": {
+          "source_name": "selectNextFlowNode",
+          "data_type": "varchar"
+        },
+        "selectLinkNodeType": {
+          "source_name": "selectLinkNodeType",
+          "data_type": "char"
+        },
+        "branchstartnodeuuid": {
+          "source_name": "branchstartnodeuuid",
+          "data_type": "varchar"
+        },
+        "branchendnodeuuid": {
+          "source_name": "branchendnodeuuid",
+          "data_type": "varchar"
+        },
+        "branchnodeuuid": {
+          "source_name": "branchnodeuuid",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT f.[workflowid] AS [workflowid],f.[nodeid] AS [nodeid],f.[nodetype] AS [nodetype],f.[IsFreeWorkflow] AS [IsFreeWorkflow],f.[drawbackflag] AS [drawbackflag],f.[rejectbackflag] AS [rejectbackflag],f.[ruleRelationship] AS [ruleRelationship],f.[UseExceptionHandle] AS [UseExceptionHandle],f.[ExceptionHandleWay] AS [ExceptionHandleWay],f.[FlowToAssignNode] AS [FlowToAssignNode],f.[isRejectRemind] AS [isRejectRemind],f.[isChangRejectNode] AS [isChangRejectNode],f.[isSelectRejectNode] AS [isSelectRejectNode],f.[rejectableNodes] AS [rejectableNodes],f.[rejecttocreater] AS [rejecttocreater],f.[rejectToCreateNode] AS [rejectToCreateNode],f.[isSubmitDirectNode] AS [isSubmitDirectNode],f.[selectNextFlow] AS [selectNextFlow],f.[selectNextFlowType] AS [selectNextFlowType],f.[selectNextFlowNode] AS [selectNextFlowNode],f.[selectLinkNodeType] AS [selectLinkNodeType],f.[branchstartnodeuuid] AS [branchstartnodeuuid],f.[branchendnodeuuid] AS [branchendnodeuuid],f.[branchnodeuuid] AS [branchnodeuuid] FROM dbo.[workflow_flownode] f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0)",
+      "order_by": "workflowid,nodeid",
+      "row_cap": 50000
+    },
+    "workflow_nodebase": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "nodename": {
+          "source_name": "nodename",
+          "data_type": "varchar"
+        },
+        "isstart": {
+          "source_name": "isstart",
+          "data_type": "char"
+        },
+        "isreject": {
+          "source_name": "isreject",
+          "data_type": "char"
+        },
+        "isreopen": {
+          "source_name": "isreopen",
+          "data_type": "char"
+        },
+        "isend": {
+          "source_name": "isend",
+          "data_type": "char"
+        },
+        "nodeattribute": {
+          "source_name": "nodeattribute",
+          "data_type": "char"
+        },
+        "passnum": {
+          "source_name": "passnum",
+          "data_type": "int"
+        },
+        "IsFreeNode": {
+          "source_name": "IsFreeNode",
+          "data_type": "char"
+        },
+        "floworder": {
+          "source_name": "floworder",
+          "data_type": "int"
+        },
+        "Signtype": {
+          "source_name": "Signtype",
+          "data_type": "char"
+        },
+        "startnodeid": {
+          "source_name": "startnodeid",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT n.[id] AS [id],n.[nodename] AS [nodename],n.[isstart] AS [isstart],n.[isreject] AS [isreject],n.[isreopen] AS [isreopen],n.[isend] AS [isend],n.[nodeattribute] AS [nodeattribute],n.[passnum] AS [passnum],n.[IsFreeNode] AS [IsFreeNode],n.[floworder] AS [floworder],n.[Signtype] AS [Signtype],n.[startnodeid] AS [startnodeid] FROM dbo.[workflow_nodebase] n WHERE (n.requestid IS NULL OR n.requestid=0) AND n.id IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))",
+      "order_by": "id",
+      "row_cap": 50000
+    },
+    "workflow_nodegroup": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "nodeid": {
+          "source_name": "nodeid",
+          "data_type": "int"
+        },
+        "groupname": {
+          "source_name": "groupname",
+          "data_type": "varchar"
+        },
+        "canview": {
+          "source_name": "canview",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[nodeid] AS [nodeid],[groupname] AS [groupname],[canview] AS [canview] FROM dbo.[workflow_nodegroup] WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))",
+      "order_by": "id",
+      "row_cap": 50000
+    },
+    "workflow_groupdetail": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "groupid": {
+          "source_name": "groupid",
+          "data_type": "int"
+        },
+        "type": {
+          "source_name": "type",
+          "data_type": "int"
+        },
+        "objid": {
+          "source_name": "objid",
+          "data_type": "int"
+        },
+        "level_n": {
+          "source_name": "level_n",
+          "data_type": "int"
+        },
+        "level2_n": {
+          "source_name": "level2_n",
+          "data_type": "int"
+        },
+        "orders": {
+          "source_name": "orders",
+          "data_type": "decimal"
+        },
+        "signorder": {
+          "source_name": "signorder",
+          "data_type": "char"
+        },
+        "CONDITIONS": {
+          "source_name": "CONDITIONS",
+          "data_type": "text"
+        },
+        "CONDITIONCN": {
+          "source_name": "CONDITIONCN",
+          "data_type": "text"
+        },
+        "IsCoadjutant": {
+          "source_name": "IsCoadjutant",
+          "data_type": "char"
+        },
+        "signtype": {
+          "source_name": "signtype",
+          "data_type": "char"
+        },
+        "issyscoadjutant": {
+          "source_name": "issyscoadjutant",
+          "data_type": "char"
+        },
+        "issubmitdesc": {
+          "source_name": "issubmitdesc",
+          "data_type": "char"
+        },
+        "ispending": {
+          "source_name": "ispending",
+          "data_type": "char"
+        },
+        "isforward": {
+          "source_name": "isforward",
+          "data_type": "char"
+        },
+        "ismodify": {
+          "source_name": "ismodify",
+          "data_type": "char"
+        },
+        "coadjutants": {
+          "source_name": "coadjutants",
+          "data_type": "varchar"
+        },
+        "deptField": {
+          "source_name": "deptField",
+          "data_type": "varchar"
+        },
+        "subcompanyField": {
+          "source_name": "subcompanyField",
+          "data_type": "varchar"
+        },
+        "virtualid": {
+          "source_name": "virtualid",
+          "data_type": "varchar"
+        },
+        "ruleRelationship": {
+          "source_name": "ruleRelationship",
+          "data_type": "char"
+        },
+        "bhxj": {
+          "source_name": "bhxj",
+          "data_type": "int"
+        },
+        "jobobj": {
+          "source_name": "jobobj",
+          "data_type": "varchar"
+        },
+        "jobfield": {
+          "source_name": "jobfield",
+          "data_type": "varchar"
+        },
+        "zdysqlname": {
+          "source_name": "zdysqlname",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[groupid] AS [groupid],[type] AS [type],[objid] AS [objid],[level_n] AS [level_n],[level2_n] AS [level2_n],[orders] AS [orders],[signorder] AS [signorder],[CONDITIONS] AS [CONDITIONS],[CONDITIONCN] AS [CONDITIONCN],[IsCoadjutant] AS [IsCoadjutant],[signtype] AS [signtype],[issyscoadjutant] AS [issyscoadjutant],[issubmitdesc] AS [issubmitdesc],[ispending] AS [ispending],[isforward] AS [isforward],[ismodify] AS [ismodify],[coadjutants] AS [coadjutants],[deptField] AS [deptField],[subcompanyField] AS [subcompanyField],[virtualid] AS [virtualid],[ruleRelationship] AS [ruleRelationship],[bhxj] AS [bhxj],[jobobj] AS [jobobj],[jobfield] AS [jobfield],[zdysqlname] AS [zdysqlname] FROM dbo.[workflow_groupdetail] WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0)))",
+      "order_by": "id",
+      "row_cap": 50000
+    },
+    "workflow_hrmoperator": {
+      "columns": {
+        "type": {
+          "source_name": "type",
+          "data_type": "varchar"
+        },
+        "objid": {
+          "source_name": "objid",
+          "data_type": "varchar"
+        },
+        "signorder": {
+          "source_name": "signorder",
+          "data_type": "varchar"
+        },
+        "orders": {
+          "source_name": "orders",
+          "data_type": "float"
+        },
+        "groupid": {
+          "source_name": "groupid",
+          "data_type": "varchar"
+        },
+        "groupdetailid": {
+          "source_name": "groupdetailid",
+          "data_type": "varchar"
+        },
+        "uuid": {
+          "source_name": "uuid",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT [type] AS [type],[objid] AS [objid],[signorder] AS [signorder],[orders] AS [orders],[groupid] AS [groupid],[groupdetailid] AS [groupdetailid],[uuid] AS [uuid] FROM dbo.[workflow_hrmoperator] WHERE TRY_CONVERT(int,groupdetailid) IN (SELECT id FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))))",
+      "order_by": "groupdetailid,groupid,[type],objid,orders,signorder,uuid",
+      "row_cap": 50000
+    },
+    "workflow_nodeform": {
+      "columns": {
+        "nodeid": {
+          "source_name": "nodeid",
+          "data_type": "int"
+        },
+        "fieldid": {
+          "source_name": "fieldid",
+          "data_type": "int"
+        },
+        "isview": {
+          "source_name": "isview",
+          "data_type": "char"
+        },
+        "isedit": {
+          "source_name": "isedit",
+          "data_type": "char"
+        },
+        "ismandatory": {
+          "source_name": "ismandatory",
+          "data_type": "char"
+        },
+        "orderid": {
+          "source_name": "orderid",
+          "data_type": "decimal"
+        },
+        "isonlyshow": {
+          "source_name": "isonlyshow",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT [nodeid] AS [nodeid],[fieldid] AS [fieldid],[isview] AS [isview],[isedit] AS [isedit],[ismandatory] AS [ismandatory],[orderid] AS [orderid],[isonlyshow] AS [isonlyshow] FROM dbo.[workflow_nodeform] WHERE nodeid IN ({scope_ids})",
+      "order_by": "nodeid,fieldid,isview,isedit,ismandatory,orderid,isonlyshow",
+      "row_cap": 300000,
+      "partition_by": {
+        "source": "workflow_flownode",
+        "column": "nodeid",
+        "batch_size": 20,
+        "max_rows_per_partition": 20000
+      }
+    },
+    "workflow_NodeFormGroup": {
+      "columns": {
+        "nodeid": {
+          "source_name": "nodeid",
+          "data_type": "int"
+        },
+        "groupid": {
+          "source_name": "groupid",
+          "data_type": "int"
+        },
+        "isadd": {
+          "source_name": "isadd",
+          "data_type": "char"
+        },
+        "isedit": {
+          "source_name": "isedit",
+          "data_type": "char"
+        },
+        "isdelete": {
+          "source_name": "isdelete",
+          "data_type": "char"
+        },
+        "ishidenull": {
+          "source_name": "ishidenull",
+          "data_type": "char"
+        },
+        "isdefault": {
+          "source_name": "isdefault",
+          "data_type": "char"
+        },
+        "isneed": {
+          "source_name": "isneed",
+          "data_type": "char"
+        },
+        "isopensapmul": {
+          "source_name": "isopensapmul",
+          "data_type": "char"
+        },
+        "defaultrows": {
+          "source_name": "defaultrows",
+          "data_type": "int"
+        },
+        "iscopy": {
+          "source_name": "iscopy",
+          "data_type": "char"
+        },
+        "mergefields": {
+          "source_name": "mergefields",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT [nodeid] AS [nodeid],[groupid] AS [groupid],[isadd] AS [isadd],[isedit] AS [isedit],[isdelete] AS [isdelete],[ishidenull] AS [ishidenull],[isdefault] AS [isdefault],[isneed] AS [isneed],[isopensapmul] AS [isopensapmul],[defaultrows] AS [defaultrows],[iscopy] AS [iscopy],[mergefields] AS [mergefields] FROM dbo.[workflow_NodeFormGroup] WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))",
+      "order_by": "nodeid,groupid,isadd,isedit,isdelete,ishidenull,isdefault,isneed,isopensapmul,defaultrows,iscopy,mergefields",
+      "row_cap": 50000
+    },
+    "HrmRoles": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "rolesmark": {
+          "source_name": "rolesmark",
+          "data_type": "varchar"
+        },
+        "rolesname": {
+          "source_name": "rolesname",
+          "data_type": "varchar"
+        },
+        "isdefault": {
+          "source_name": "isdefault",
+          "data_type": "char"
+        },
+        "type": {
+          "source_name": "type",
+          "data_type": "int"
+        },
+        "subcompanyid": {
+          "source_name": "subcompanyid",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[rolesmark] AS [rolesmark],[rolesname] AS [rolesname],[isdefault] AS [isdefault],[type] AS [type],[subcompanyid] AS [subcompanyid] FROM dbo.[HrmRoles] WHERE id IN (SELECT objid FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))) AND [type]=2)",
+      "order_by": "id",
+      "row_cap": 10000
+    },
+    "HrmRoleMembers": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "roleid": {
+          "source_name": "roleid",
+          "data_type": "int"
+        },
+        "resourceid": {
+          "source_name": "resourceid",
+          "data_type": "int"
+        },
+        "rolelevel": {
+          "source_name": "rolelevel",
+          "data_type": "char"
+        },
+        "resourcetype": {
+          "source_name": "resourcetype",
+          "data_type": "int"
+        },
+        "alllevel": {
+          "source_name": "alllevel",
+          "data_type": "int"
+        },
+        "seclevelfrom": {
+          "source_name": "seclevelfrom",
+          "data_type": "int"
+        },
+        "seclevelto": {
+          "source_name": "seclevelto",
+          "data_type": "int"
+        },
+        "jobtitlelevel": {
+          "source_name": "jobtitlelevel",
+          "data_type": "int"
+        },
+        "subdepid": {
+          "source_name": "subdepid",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[roleid] AS [roleid],[resourceid] AS [resourceid],[rolelevel] AS [rolelevel],[resourcetype] AS [resourcetype],[alllevel] AS [alllevel],[seclevelfrom] AS [seclevelfrom],[seclevelto] AS [seclevelto],[jobtitlelevel] AS [jobtitlelevel],[subdepid] AS [subdepid] FROM dbo.[HrmRoleMembers] WHERE roleid IN (SELECT objid FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))) AND [type]=2)",
+      "order_by": "id",
+      "row_cap": 20000
+    },
+    "HrmResource": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "lastname": {
+          "source_name": "lastname",
+          "data_type": "varchar"
+        },
+        "status": {
+          "source_name": "status",
+          "data_type": "int"
+        },
+        "departmentid": {
+          "source_name": "departmentid",
+          "data_type": "int"
+        },
+        "subcompanyid1": {
+          "source_name": "subcompanyid1",
+          "data_type": "int"
+        },
+        "managerid": {
+          "source_name": "managerid",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[lastname] AS [lastname],[status] AS [status],[departmentid] AS [departmentid],[subcompanyid1] AS [subcompanyid1],[managerid] AS [managerid] FROM dbo.[HrmResource] WHERE id IN (SELECT objid FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))) AND [type]=3 UNION SELECT resourceid FROM dbo.HrmRoleMembers WHERE roleid IN (SELECT objid FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))) AND [type]=2) AND resourcetype=1 UNION SELECT TRY_CONVERT(int,h.objid) FROM dbo.workflow_hrmoperator h JOIN dbo.workflow_groupdetail d ON d.id=TRY_CONVERT(int,h.groupdetailid) WHERE d.id IN (SELECT id FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0)))) AND d.[type]=3 AND (TRY_CONVERT(int,h.groupid)=d.groupid OR h.groupid IS NULL OR h.groupid='' OR TRY_CONVERT(int,h.groupid)=0))",
+      "order_by": "id",
+      "row_cap": 10000
+    },
+    "HrmDepartment": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "departmentmark": {
+          "source_name": "departmentmark",
+          "data_type": "varchar"
+        },
+        "departmentname": {
+          "source_name": "departmentname",
+          "data_type": "varchar"
+        },
+        "subcompanyid1": {
+          "source_name": "subcompanyid1",
+          "data_type": "int"
+        },
+        "supdepid": {
+          "source_name": "supdepid",
+          "data_type": "int"
+        },
+        "canceled": {
+          "source_name": "canceled",
+          "data_type": "char"
+        }
+      },
+      "sql": "WITH org_scope(id,depth,visited) AS (SELECT id,0,CAST('/'+CAST(id AS varchar(20))+'/' AS varchar(4000)) FROM dbo.[HrmDepartment] WHERE id IN ({scope_ids}) UNION ALL SELECT p.id,s.depth+1,CAST(s.visited+CAST(p.id AS varchar(20))+'/' AS varchar(4000)) FROM org_scope s JOIN dbo.[HrmDepartment] c ON c.id=s.id JOIN dbo.[HrmDepartment] p ON p.id=c.[supdepid] WHERE s.depth<32 AND CHARINDEX('/'+CAST(p.id AS varchar(20))+'/',s.visited)=0) SELECT [id] AS [id],[departmentmark] AS [departmentmark],[departmentname] AS [departmentname],[subcompanyid1] AS [subcompanyid1],[supdepid] AS [supdepid],[canceled] AS [canceled] FROM dbo.[HrmDepartment] WHERE id IN (SELECT id FROM org_scope)",
+      "order_by": "id",
+      "row_cap": 10000,
+      "reference_scope": {
+        "max_ids": 1800,
+        "references": [
+          {
+            "source": "HrmResource",
+            "column": "departmentid"
+          },
+          {
+            "source": "workflow_groupdetail",
+            "column": "objid",
+            "filters": {
+              "type": 1
+            }
+          },
+          {
+            "source": "HrmRoleMembers",
+            "column": "resourceid",
+            "filters": {
+              "resourcetype": 3
+            }
+          },
+          {
+            "source": "HrmRoleMembers",
+            "column": "subdepid",
+            "filters": {
+              "resourcetype": 5,
+              "jobtitlelevel": 3
+            }
+          }
+        ]
+      }
+    },
+    "HrmSubCompany": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "subcompanyname": {
+          "source_name": "subcompanyname",
+          "data_type": "varchar"
+        },
+        "subcompanydesc": {
+          "source_name": "subcompanydesc",
+          "data_type": "varchar"
+        },
+        "supsubcomid": {
+          "source_name": "supsubcomid",
+          "data_type": "int"
+        },
+        "canceled": {
+          "source_name": "canceled",
+          "data_type": "char"
+        }
+      },
+      "sql": "WITH org_scope(id,depth,visited) AS (SELECT id,0,CAST('/'+CAST(id AS varchar(20))+'/' AS varchar(4000)) FROM dbo.[HrmSubCompany] WHERE id IN ({scope_ids}) UNION ALL SELECT p.id,s.depth+1,CAST(s.visited+CAST(p.id AS varchar(20))+'/' AS varchar(4000)) FROM org_scope s JOIN dbo.[HrmSubCompany] c ON c.id=s.id JOIN dbo.[HrmSubCompany] p ON p.id=c.[supsubcomid] WHERE s.depth<32 AND CHARINDEX('/'+CAST(p.id AS varchar(20))+'/',s.visited)=0) SELECT [id] AS [id],[subcompanyname] AS [subcompanyname],[subcompanydesc] AS [subcompanydesc],[supsubcomid] AS [supsubcomid],[canceled] AS [canceled] FROM dbo.[HrmSubCompany] WHERE id IN (SELECT id FROM org_scope)",
+      "order_by": "id",
+      "row_cap": 1000,
+      "reference_scope": {
+        "max_ids": 1800,
+        "references": [
+          {
+            "source": "HrmResource",
+            "column": "subcompanyid1"
+          },
+          {
+            "source": "HrmDepartment",
+            "column": "subcompanyid1"
+          },
+          {
+            "source": "HrmRoles",
+            "column": "subcompanyid"
+          },
+          {
+            "source": "HrmRoleMembers",
+            "column": "resourceid",
+            "filters": {
+              "resourcetype": 2
+            }
+          },
+          {
+            "source": "HrmRoleMembers",
+            "column": "subdepid",
+            "filters": {
+              "resourcetype": 5,
+              "jobtitlelevel": 2
+            }
+          }
+        ]
+      }
+    },
+    "HrmJobTitles": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "jobtitlemark": {
+          "source_name": "jobtitlemark",
+          "data_type": "varchar"
+        },
+        "jobtitlename": {
+          "source_name": "jobtitlename",
+          "data_type": "varchar"
+        },
+        "canceled": {
+          "source_name": "canceled",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[jobtitlemark] AS [jobtitlemark],[jobtitlename] AS [jobtitlename],[canceled] AS [canceled] FROM dbo.[HrmJobTitles] WHERE id IN (SELECT resourceid FROM dbo.HrmRoleMembers WHERE roleid IN (SELECT objid FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))) AND [type]=2) AND resourcetype=5)",
+      "order_by": "id",
+      "row_cap": 10000
+    },
+    "rule_maplist": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "wfid": {
+          "source_name": "wfid",
+          "data_type": "int"
+        },
+        "linkid": {
+          "source_name": "linkid",
+          "data_type": "int"
+        },
+        "ruleid": {
+          "source_name": "ruleid",
+          "data_type": "int"
+        },
+        "rulesrc": {
+          "source_name": "rulesrc",
+          "data_type": "int"
+        },
+        "isused": {
+          "source_name": "isused",
+          "data_type": "int"
+        },
+        "nm": {
+          "source_name": "nm",
+          "data_type": "int"
+        },
+        "rowidenty": {
+          "source_name": "rowidenty",
+          "data_type": "int"
+        },
+        "detailid": {
+          "source_name": "detailid",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[wfid] AS [wfid],[linkid] AS [linkid],[ruleid] AS [ruleid],[rulesrc] AS [rulesrc],[isused] AS [isused],[nm] AS [nm],[rowidenty] AS [rowidenty],[detailid] AS [detailid] FROM dbo.[rule_maplist] WHERE rulesrc IN (2,-2) AND linkid IN (SELECT id FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0))))",
+      "order_by": "id",
+      "row_cap": 50000
+    },
+    "rule_base": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "rulesrc": {
+          "source_name": "rulesrc",
+          "data_type": "int"
+        },
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "linkid": {
+          "source_name": "linkid",
+          "data_type": "int"
+        },
+        "isbill": {
+          "source_name": "isbill",
+          "data_type": "int"
+        },
+        "rulename": {
+          "source_name": "rulename",
+          "data_type": "varchar"
+        },
+        "ruledesc": {
+          "source_name": "ruledesc",
+          "data_type": "varchar"
+        },
+        "condit": {
+          "source_name": "condit",
+          "data_type": "text"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[rulesrc] AS [rulesrc],[formid] AS [formid],[linkid] AS [linkid],[isbill] AS [isbill],[rulename] AS [rulename],[ruledesc] AS [ruledesc],[condit] AS [condit] FROM dbo.[rule_base] WHERE id IN (SELECT ruleid FROM dbo.rule_maplist WHERE rulesrc IN (2,-2) AND linkid IN (SELECT id FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0)))))",
+      "order_by": "id",
+      "row_cap": 50000
+    },
+    "rule_expressionbase": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "ruleid": {
+          "source_name": "ruleid",
+          "data_type": "int"
+        },
+        "datafield": {
+          "source_name": "datafield",
+          "data_type": "varchar"
+        },
+        "datafieldtext": {
+          "source_name": "datafieldtext",
+          "data_type": "varchar"
+        },
+        "compareoption1": {
+          "source_name": "compareoption1",
+          "data_type": "int"
+        },
+        "compareoption2": {
+          "source_name": "compareoption2",
+          "data_type": "int"
+        },
+        "htmltype": {
+          "source_name": "htmltype",
+          "data_type": "int"
+        },
+        "typehrm": {
+          "source_name": "typehrm",
+          "data_type": "int"
+        },
+        "fieldtype": {
+          "source_name": "fieldtype",
+          "data_type": "varchar"
+        },
+        "valuetype": {
+          "source_name": "valuetype",
+          "data_type": "int"
+        },
+        "paramtype": {
+          "source_name": "paramtype",
+          "data_type": "int"
+        },
+        "elementvalue1": {
+          "source_name": "elementvalue1",
+          "data_type": "text"
+        },
+        "elementlabel1": {
+          "source_name": "elementlabel1",
+          "data_type": "text"
+        },
+        "elementvalue2": {
+          "source_name": "elementvalue2",
+          "data_type": "varchar"
+        },
+        "dbtype": {
+          "source_name": "dbtype",
+          "data_type": "varchar"
+        },
+        "redius": {
+          "source_name": "redius",
+          "data_type": "int"
+        },
+        "meetcondition": {
+          "source_name": "meetcondition",
+          "data_type": "int"
+        },
+        "nodeid": {
+          "source_name": "nodeid",
+          "data_type": "int"
+        },
+        "old_compareoption1": {
+          "source_name": "old_compareoption1",
+          "data_type": "int"
+        },
+        "valuetype2": {
+          "source_name": "valuetype2",
+          "data_type": "int"
+        },
+        "elementlabel2": {
+          "source_name": "elementlabel2",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[ruleid] AS [ruleid],[datafield] AS [datafield],[datafieldtext] AS [datafieldtext],[compareoption1] AS [compareoption1],[compareoption2] AS [compareoption2],[htmltype] AS [htmltype],[typehrm] AS [typehrm],[fieldtype] AS [fieldtype],[valuetype] AS [valuetype],[paramtype] AS [paramtype],[elementvalue1] AS [elementvalue1],[elementlabel1] AS [elementlabel1],[elementvalue2] AS [elementvalue2],[dbtype] AS [dbtype],[redius] AS [redius],[meetcondition] AS [meetcondition],[nodeid] AS [nodeid],[old_compareoption1] AS [old_compareoption1],[valuetype2] AS [valuetype2],[elementlabel2] AS [elementlabel2] FROM dbo.[rule_expressionbase] WHERE ruleid IN (SELECT ruleid FROM dbo.rule_maplist WHERE rulesrc IN (2,-2) AND linkid IN (SELECT id FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0)))))",
+      "order_by": "id",
+      "row_cap": 50000
+    },
+    "rule_expressions": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "ruleid": {
+          "source_name": "ruleid",
+          "data_type": "int"
+        },
+        "relation": {
+          "source_name": "relation",
+          "data_type": "int"
+        },
+        "expids": {
+          "source_name": "expids",
+          "data_type": "varchar"
+        },
+        "expbaseid": {
+          "source_name": "expbaseid",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[ruleid] AS [ruleid],[relation] AS [relation],[expids] AS [expids],[expbaseid] AS [expbaseid] FROM dbo.[rule_expressions] WHERE ruleid IN (SELECT ruleid FROM dbo.rule_maplist WHERE rulesrc IN (2,-2) AND linkid IN (SELECT id FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0)))))",
+      "order_by": "id",
+      "row_cap": 50000
+    },
+    "rule_mapitem": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "ruleid": {
+          "source_name": "ruleid",
+          "data_type": "int"
+        },
+        "rulesrc": {
+          "source_name": "rulesrc",
+          "data_type": "int"
+        },
+        "linkid": {
+          "source_name": "linkid",
+          "data_type": "int"
+        },
+        "rulevarid": {
+          "source_name": "rulevarid",
+          "data_type": "int"
+        },
+        "formfieldid": {
+          "source_name": "formfieldid",
+          "data_type": "int"
+        },
+        "rowidenty": {
+          "source_name": "rowidenty",
+          "data_type": "int"
+        },
+        "nodeid": {
+          "source_name": "nodeid",
+          "data_type": "int"
+        },
+        "meetcondition": {
+          "source_name": "meetcondition",
+          "data_type": "int"
+        },
+        "flag": {
+          "source_name": "flag",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[ruleid] AS [ruleid],[rulesrc] AS [rulesrc],[linkid] AS [linkid],[rulevarid] AS [rulevarid],[formfieldid] AS [formfieldid],[rowidenty] AS [rowidenty],[nodeid] AS [nodeid],[meetcondition] AS [meetcondition],[flag] AS [flag] FROM dbo.[rule_mapitem] WHERE rulesrc IN (2,-2) AND linkid IN (SELECT id FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0)))) AND ruleid IN (SELECT ruleid FROM dbo.rule_maplist WHERE rulesrc IN (2,-2) AND linkid IN (SELECT id FROM dbo.workflow_groupdetail WHERE groupid IN (SELECT id FROM dbo.workflow_nodegroup WHERE nodeid IN (SELECT f.nodeid FROM dbo.workflow_flownode f WHERE f.workflowid IN (SELECT id FROM dbo.workflow_base) AND NOT EXISTS (SELECT 1 FROM dbo.workflow_nodebase n WHERE n.id=f.nodeid AND n.requestid IS NOT NULL AND n.requestid<>0)))))",
+      "order_by": "id",
+      "row_cap": 50000
+    }
+  },
+  "metadata_sources": [],
+  "source_keys": {
+    "workflow_nodeform": [
+      "nodeid",
+      "fieldid"
+    ],
+    "workflow_NodeFormGroup": [
+      "nodeid",
+      "groupid"
+    ],
+    "workflow_flownode": [
+      "workflowid",
+      "nodeid"
+    ],
+    "workflow_hrmoperator": [
+      "type",
+      "objid",
+      "signorder",
+      "orders",
+      "groupid",
+      "groupdetailid",
+      "uuid"
+    ]
+  },
+  "privacy": {
+    "personnel_columns": [
+      "id",
+      "lastname",
+      "status",
+      "departmentid",
+      "subcompanyid1",
+      "managerid"
+    ],
+    "personnel_scope": "only fixed-person rule direct and scoped workflow_hrmoperator objects plus referenced role members resource type 1",
+    "excluded": [
+      "password",
+      "loginid",
+      "telephone",
+      "mobile",
+      "email",
+      "birthday",
+      "tokenkey",
+      "salt",
+      "encKey",
+      "bank_account"
+    ]
+  },
+  "interpretation": {
+    "operator_types_reference": {
+      "2": "role",
+      "3": "person",
+      "5": "form_field",
+      "17": "creator_dynamic",
+      "18": "creator_manager_dynamic",
+      "40": "selected_node_operator_dynamic",
+      "1": "department",
+      "4": "everyone_dynamic",
+      "6": "form_field_manager_dynamic"
+    },
+    "role_member_namespaces": {
+      "1": "person",
+      "2": "subcompany",
+      "3": "department",
+      "5": "jobtitle",
+      "8": "system_administrator_not_expanded"
+    },
+    "detail_group_basis": "local source: zero-based sequence of details ordered by orderid; ties unresolved",
+    "effective_permissions": "base flags only; layouts/scripts/runtime overrides are separate",
+    "platform_fields_reference": {
+      "-1": "流程标题",
+      "-2": "紧急程度",
+      "-3": "短信提醒",
+      "-4": "签字意见",
+      "-5": "微信提醒",
+      "-9": "打印次数"
+    },
+    "fixed_person_objects": "workflow_hrmoperator joins static workflow_groupdetail.id; preserve object type separately; conflicting group and empty object unresolved; no workitem read",
+    "organization_reading": "parameterized referenced ids from already captured configuration, max1800 seeds; ancestors depth32 with cycle guard; no entire employee directory"
+  },
+  "scope_anchors": {
+    "B03": [
+      "workflow_flownode",
+      "workflow_nodebase"
+    ]
+  }
+}

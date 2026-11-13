@@ -1,0 +1,4 @@
+interface:
+  display_name: "OA建模模块分析"
+  short_description: "解析泛微建模导出，生成中文模块说明书并分析配置衔接，辅助导出新增表数据字典"
+  default_prompt: "使用 $oa-module-analysis 解析这个建模模块导出包，给我一份包含功能还原、分析结论和优化方向的中文模块说明书。"

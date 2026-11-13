@@ -1,0 +1,498 @@
+{
+  "category": "B09",
+  "name": "运行记录数据结构",
+  "method_version": "1.0.0",
+  "normalization_version": "1.0.0",
+  "scope": "fixed_runtime_and_reference_object_sys_metadata_no_business_rows_no_status_samples",
+  "reader": "readers/Read-B09.ps1",
+  "report_file": "B09运行记录数据结构.html",
+  "dependencies": [
+    "B01",
+    "B08"
+  ],
+  "raw_dependencies": [
+    "B08"
+  ],
+  "sources": {},
+  "metadata_sources": [
+    "objects",
+    "columns",
+    "indexes",
+    "foreign_keys",
+    "view_definitions",
+    "extended_properties",
+    "local_reference_files"
+  ],
+  "metadata_queries": {
+    "objects": {
+      "sql": "SELECT s.name AS schema_name,o.name AS object_name,o.object_id,o.type_desc,HAS_PERMS_BY_NAME(QUOTENAME(s.name)+'.'+QUOTENAME(o.name),'OBJECT','SELECT') AS can_select,HAS_PERMS_BY_NAME(QUOTENAME(s.name)+'.'+QUOTENAME(o.name),'OBJECT','VIEW DEFINITION') AS can_view_definition FROM sys.objects o JOIN sys.schemas s ON s.schema_id=o.schema_id WHERE o.type IN ('U','V') AND o.name IN ({object_names}) ORDER BY s.name,o.name;",
+      "row_cap": 6000
+    },
+    "columns": {
+      "sql": "SELECT s.name AS schema_name,o.name AS object_name,c.column_id,c.name AS column_name,t.name AS data_type,c.max_length,c.precision,c.scale,c.is_nullable,c.is_identity,c.is_computed FROM sys.objects o JOIN sys.schemas s ON s.schema_id=o.schema_id JOIN sys.columns c ON c.object_id=o.object_id JOIN sys.types t ON t.user_type_id=c.user_type_id WHERE o.type IN ('U','V') AND o.name IN ({object_names}) ORDER BY s.name,o.name,c.column_id;",
+      "row_cap": 6000
+    },
+    "indexes": {
+      "sql": "SELECT s.name AS schema_name,o.name AS object_name,i.index_id,i.name AS index_name,i.is_unique,i.is_primary_key,i.is_unique_constraint,i.is_disabled,i.is_hypothetical,i.has_filter,i.filter_definition,ic.key_ordinal,ic.is_included_column,c.name AS column_name FROM sys.objects o JOIN sys.schemas s ON s.schema_id=o.schema_id JOIN sys.indexes i ON i.object_id=o.object_id JOIN sys.index_columns ic ON ic.object_id=i.object_id AND ic.index_id=i.index_id JOIN sys.columns c ON c.object_id=ic.object_id AND c.column_id=ic.column_id WHERE o.type IN ('U','V') AND i.index_id>0 AND o.name IN ({object_names}) ORDER BY s.name,o.name,i.index_id,ic.index_column_id;",
+      "row_cap": 6000
+    },
+    "foreign_keys": {
+      "sql": "SELECT ps.name AS schema_name,po.name AS object_name,f.name AS foreign_key_name,fc.constraint_column_id,pc.name AS column_name,rs.name AS referenced_schema,ro.name AS referenced_object,rc.name AS referenced_column,f.is_disabled,f.is_not_trusted FROM sys.foreign_keys f JOIN sys.foreign_key_columns fc ON f.object_id=fc.constraint_object_id JOIN sys.objects po ON po.object_id=f.parent_object_id JOIN sys.schemas ps ON ps.schema_id=po.schema_id JOIN sys.columns pc ON pc.object_id=po.object_id AND pc.column_id=fc.parent_column_id JOIN sys.objects ro ON ro.object_id=f.referenced_object_id JOIN sys.schemas rs ON rs.schema_id=ro.schema_id JOIN sys.columns rc ON rc.object_id=ro.object_id AND rc.column_id=fc.referenced_column_id WHERE po.name IN ({object_names}) ORDER BY ps.name,po.name,f.name,fc.constraint_column_id;",
+      "row_cap": 6000
+    },
+    "view_definitions": {
+      "sql": "SELECT s.name AS schema_name,o.name AS object_name,OBJECT_DEFINITION(o.object_id) AS definition FROM sys.objects o JOIN sys.schemas s ON s.schema_id=o.schema_id WHERE o.type='V' AND o.name IN ({object_names}) ORDER BY s.name,o.name;",
+      "row_cap": 20
+    },
+    "extended_properties": {
+      "row_cap": 6000,
+      "sql": "SELECT s.name AS schema_name,o.name AS object_name,ep.minor_id,ep.name AS property_name,CONVERT(nvarchar(4000),ep.value) AS property_value\nFROM sys.objects o JOIN sys.schemas s ON s.schema_id=o.schema_id JOIN sys.extended_properties ep ON ep.class=1 AND ep.major_id=o.object_id\nWHERE o.type IN ('U','V') AND o.name IN ({object_names}) ORDER BY s.name,o.name,ep.minor_id,ep.name;"
+    }
+  },
+  "metadata_limits": {
+    "objects": 6000,
+    "columns": 6000,
+    "indexes": 6000,
+    "foreign_keys": 6000,
+    "view_definitions": 20,
+    "extended_properties": 6000,
+    "local_reference_files": 20
+  },
+  "limits": {
+    "query_timeout_seconds": 10,
+    "read_budget_seconds": 180,
+    "process_timeout_seconds": 240,
+    "max_physical_columns": 6000,
+    "max_targets": 50
+  },
+  "targets": [
+    {
+      "name": "workflow_requestbase",
+      "purpose": "单据主档",
+      "grain_note": "申请的主状态和当前节点字段；当前未证明requestid有单列唯一约束"
+    },
+    {
+      "name": "workflow_currentoperator",
+      "purpose": "办理项",
+      "grain_note": "经办/待办及处理状态，单据可多人、多轮进入节点"
+    },
+    {
+      "name": "workflow_requestLog",
+      "purpose": "操作事件",
+      "grain_note": "流转/操作事件候选，logtype与意见完整含义待校准"
+    },
+    {
+      "name": "workflow_nodebase",
+      "purpose": "节点定义或实例节点",
+      "grain_note": "requestid要区分静态和请求专用节点"
+    },
+    {
+      "name": "workflow_nodelink",
+      "purpose": "路径定义或实例路径",
+      "grain_note": "wfrequestid要区分静态和请求专用路径"
+    },
+    {
+      "name": "workflow_form",
+      "purpose": "旧式主表",
+      "grain_note": "共享旧式字段，按requestid连接候选，不能按字段同名混用表单"
+    },
+    {
+      "name": "workflow_formdetail",
+      "purpose": "旧式明细",
+      "grain_note": "requestid/groupId/行标识分别保留"
+    },
+    {
+      "name": "V_JDSX",
+      "purpose": "视图",
+      "grain_note": "定义不可见时，过滤/去重/汇总/完整历史均未知"
+    },
+    {
+      "name": "CubeInterfaceLog",
+      "purpose": "接口尝试日志结构",
+      "grain_note": "报文及返回正文列仅登记类型，不读取记录"
+    },
+    {
+      "name": "workflowtomodelog",
+      "purpose": "流程转建模日志结构",
+      "grain_note": "配置引用、触发与结果列；不证明每次接口都留痕"
+    },
+    {
+      "name": "uf_wslog",
+      "purpose": "本机日志索引结构",
+      "grain_note": "本机源码有INSERT，filename为文件指针，不读取对应文件"
+    },
+    {
+      "name": "workflow_base",
+      "purpose": "流程定义参考",
+      "grain_note": "运行对象workflowid的配置端结构参考"
+    },
+    {
+      "name": "modeinfo",
+      "purpose": "模块定义参考",
+      "grain_note": "日志引用模块编号的结构参考"
+    },
+    {
+      "name": "mode_workflowtomodeset",
+      "purpose": "流程转建模设置参考",
+      "grain_note": "日志配置编号的结构参考"
+    },
+    {
+      "name": "CubeInterfaceConfig",
+      "purpose": "接口定义参考",
+      "grain_note": "日志configid的配置端结构；认证密钥只登记列，不读值"
+    }
+  ],
+  "relationships": [
+    {
+      "source_object": "workflow_currentoperator",
+      "source_columns": [
+        "requestid"
+      ],
+      "target_object": "workflow_requestbase",
+      "target_columns": [
+        "requestid"
+      ],
+      "basis": "本机RequestView按两个对象requestid连接的参考",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_requestLog",
+      "source_columns": [
+        "requestid"
+      ],
+      "target_object": "workflow_requestbase",
+      "target_columns": [
+        "requestid"
+      ],
+      "basis": "本机代码按请求取事件的逻辑候选，非物理外键证明",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_form",
+      "source_columns": [
+        "requestid"
+      ],
+      "target_object": "workflow_requestbase",
+      "target_columns": [
+        "requestid"
+      ],
+      "basis": "B02旧式表单及本机WorkflowService参考",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_formdetail",
+      "source_columns": [
+        "requestid"
+      ],
+      "target_object": "workflow_form",
+      "target_columns": [
+        "requestid"
+      ],
+      "basis": "B02旧式主明细连接候选，必须保留groupId粒度",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_requestbase",
+      "source_columns": [
+        "workflowid"
+      ],
+      "target_object": "workflow_base",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "配置/运行标识的结构连接候选",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_currentoperator",
+      "source_columns": [
+        "workflowid"
+      ],
+      "target_object": "workflow_base",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "配置/运行标识的结构连接候选",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_requestLog",
+      "source_columns": [
+        "workflowid"
+      ],
+      "target_object": "workflow_base",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "配置/运行标识的结构连接候选",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflowtomodelog",
+      "source_columns": [
+        "workflowid"
+      ],
+      "target_object": "workflow_base",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "配置/运行标识的结构连接候选",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_requestbase",
+      "source_columns": [
+        "currentnodeid"
+      ],
+      "target_object": "workflow_nodebase",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "节点标识结构候选",
+      "context_guard": "区分静态NULL/0及同请求的实例节点；不以当前定义解释完整历史",
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_currentoperator",
+      "source_columns": [
+        "nodeid"
+      ],
+      "target_object": "workflow_nodebase",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "节点标识结构候选",
+      "context_guard": "同一请求/节点可重入，未证明独立进入轮次",
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_requestLog",
+      "source_columns": [
+        "nodeid"
+      ],
+      "target_object": "workflow_nodebase",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "节点标识结构候选",
+      "context_guard": "同一请求/节点可重入，未证明独立进入轮次",
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_nodebase",
+      "source_columns": [
+        "requestid"
+      ],
+      "target_object": "workflow_requestbase",
+      "target_columns": [
+        "requestid"
+      ],
+      "basis": "请求专用节点所属请求候选",
+      "context_guard": "静态NULL/0不当成运行请求",
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflow_nodelink",
+      "source_columns": [
+        "wfrequestid"
+      ],
+      "target_object": "workflow_requestbase",
+      "target_columns": [
+        "requestid"
+      ],
+      "basis": "请求专用路径所属请求候选",
+      "context_guard": "静态NULL与其他原值不自动混用",
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "CubeInterfaceLog",
+      "source_columns": [
+        "configid"
+      ],
+      "target_object": "CubeInterfaceConfig",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "B08接口定义与日志configid的结构候选",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflowtomodelog",
+      "source_columns": [
+        "workflowtomodesetid"
+      ],
+      "target_object": "mode_workflowtomodeset",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "B08流程转建模设置与日志配置引用候选",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflowtomodelog",
+      "source_columns": [
+        "modeid"
+      ],
+      "target_object": "modeinfo",
+      "target_columns": [
+        "id"
+      ],
+      "basis": "日志模块编号的结构候选",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "workflowtomodelog",
+      "source_columns": [
+        "requestid"
+      ],
+      "target_object": "workflow_requestbase",
+      "target_columns": [
+        "requestid"
+      ],
+      "basis": "日志请求编号的结构候选，不证明日志覆盖完整",
+      "context_guard": null,
+      "requires_view_definition": false
+    },
+    {
+      "source_object": "V_JDSX",
+      "source_columns": [
+        "requestid"
+      ],
+      "target_object": "workflow_requestbase",
+      "target_columns": [
+        "requestid"
+      ],
+      "basis": "仅同类型列候选；必须先取得视图定义",
+      "context_guard": null,
+      "requires_view_definition": true
+    }
+  ],
+  "status_fields": {
+    "workflow_requestbase": [
+      "currentnodetype",
+      "lastnodetype",
+      "currentstatus",
+      "laststatus",
+      "status",
+      "deleted",
+      "creatertype"
+    ],
+    "workflow_currentoperator": [
+      "isremark",
+      "preisremark",
+      "lastisremark",
+      "islasttimes",
+      "takisremark",
+      "isprocessed",
+      "iscomplete",
+      "viewtype",
+      "agenttype",
+      "agentorbyagentid",
+      "operatetype"
+    ],
+    "workflow_requestLog": [
+      "logtype",
+      "operatortype",
+      "agenttype",
+      "agentorbyagentid",
+      "isSubmitDirect"
+    ],
+    "workflow_nodebase": [
+      "requestid",
+      "nodeattribute",
+      "IsFreeNode",
+      "isstart",
+      "isend"
+    ],
+    "workflow_nodelink": [
+      "wfrequestid",
+      "isreject",
+      "isautoflow"
+    ],
+    "CubeInterfaceLog": [
+      "interfacetype"
+    ],
+    "workflowtomodelog": [
+      "logtype",
+      "logsources",
+      "triggertype",
+      "triggerNodeId",
+      "triggerMethod"
+    ],
+    "uf_wslog": [
+      "status",
+      "filename",
+      "elapsedtime"
+    ],
+    "V_JDSX": [
+      "rn",
+      "iscomplete",
+      "isremark",
+      "preisremark",
+      "lastisremark",
+      "viewtype",
+      "back_out_count",
+      "back_in_count",
+      "transfer_count",
+      "ElapsedHours"
+    ]
+  },
+  "requires_runtime_references": true,
+  "source_keys": {
+    "objects": [
+      "schema_name",
+      "object_name"
+    ],
+    "columns": [
+      "schema_name",
+      "object_name",
+      "column_id"
+    ],
+    "indexes": [
+      "schema_name",
+      "object_name",
+      "index_id",
+      "column_name",
+      "key_ordinal",
+      "is_included_column"
+    ],
+    "foreign_keys": [
+      "schema_name",
+      "object_name",
+      "foreign_key_name",
+      "constraint_column_id"
+    ],
+    "view_definitions": [
+      "schema_name",
+      "object_name"
+    ],
+    "extended_properties": [
+      "schema_name",
+      "object_name",
+      "minor_id",
+      "property_name"
+    ],
+    "local_reference_files": [
+      "reference_key"
+    ]
+  },
+  "normalizer_support_files": [
+    "runtime_references.py",
+    "interface_sources.py",
+    "source_evidence.py",
+    "sql_refs.py",
+    "categories/b05.py",
+    "../oa-workflow-analyzer/src/oa_workflow_analyzer/scripts.py"
+  ]
+}

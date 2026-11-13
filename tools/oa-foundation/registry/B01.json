@@ -1,0 +1,31 @@
+{
+  "category": "B01",
+  "name": "流程目录",
+  "method_version": "1.0.0",
+  "normalization_version": "1.0.0",
+  "scope": "all_account_visible_rows_in_four_configuration_tables_no_status_filter",
+  "reader": "readers/Read-B01.ps1",
+  "report_file": "流程目录.html",
+  "limits": {"page_size": 500, "max_rows_per_table": 20000, "query_timeout_seconds": 10, "read_budget_seconds": 120},
+  "tables": {
+    "workflow_base": {"id": "int", "workflowname": "varchar", "workflowtype": "int", "formid": "int", "isbill": "char", "isvalid": "char", "version": "int", "activeVersionID": "int", "istemplate": "char", "templateid": "int", "isfree": "char", "subcompanyid": "int"},
+    "workflow_type": {"id": "int", "typename": "varchar"},
+    "workflow_bill": {"id": "int", "tablename": "varchar", "namelabel": "int", "invalid": "int"},
+    "workflow_formbase": {"id": "int", "formname": "varchar"}
+  },
+  "relations": [
+    "workflow_base.workflowtype = workflow_type.id",
+    "isbill raw 1: workflow_base.formid = workflow_bill.id; preserve signed ID",
+    "isbill raw 0: workflow_base.formid = workflow_formbase.id; selector interpretation pending platform confirmation",
+    "workflow_base.activeVersionID = workflow_base.id; pointer only, not a reconstructed historical version chain"
+  ],
+  "semantics": {
+    "state": "partial_pending_confirmation",
+    "confirmed": ["signed form ID joins workflow_bill for previously verified procurement configuration"],
+    "unconfirmed": ["isvalid codes", "version chain ownership", "template/free workflow code semantics", "isbill=0 selector meaning in this deployment", "account visibility compared with administrator directory"]
+  },
+  "compatibility": "dbo schema, exact listed column types; SQL Server 2016 connection verified locally; other deployments must pass structure checks",
+  "failure_policy": "reject missing columns, SELECT denial, row cap, duplicate IDs, incomplete pages, empty workflow directory or two-pass content changes; never replace latest successful batch",
+  "consistency": "two equal sequential content reads; READ COMMITTED; not a transaction-level point-in-time snapshot",
+  "review_policy": "batch acceptance separate from semantic confirmation; default knowledge lookup requires accepted review"
+}

@@ -1,0 +1,2108 @@
+{
+  "category": "B07",
+  "name": "关联报表与查询列表",
+  "method_version": "1.0.1",
+  "normalization_version": "1.0.0",
+  "scope": "B01_B06_referenced_report_search_virtual_definitions_no_result_rows",
+  "reader": "readers/Read-B07.ps1",
+  "report_file": "B07关联报表.html",
+  "dependencies": [
+    "B01",
+    "B02",
+    "B06"
+  ],
+  "scope_anchors": {
+    "B06": {
+      "B06_modeinfo": "modeinfo",
+      "B06_workflow_bill": "workflow_bill",
+      "B06_workflow_billfield": "workflow_billfield",
+      "B06_Workflow_billdetailtable": "Workflow_billdetailtable",
+      "B06_workflow_formbase": "B02_workflow_formbase",
+      "B06_workflow_formfield": "B02_workflow_formfield",
+      "B06_workflow_formdict": "B02_workflow_formdict",
+      "B06_workflow_formdictdetail": "B02_workflow_formdictdetail",
+      "B06_workflow_fieldlable": "B02_workflow_fieldlable",
+      "B06_HtmlLabelInfo": "HtmlLabelInfo"
+    }
+  },
+  "limits": {
+    "page_size": 500,
+    "query_timeout_seconds": 10,
+    "read_budget_seconds": 300,
+    "process_timeout_seconds": 390,
+    "max_rows_per_source": 50000,
+    "max_scope_ids": 1600
+  },
+  "scope_mappings": {
+    "standard_ids": {
+      "source": "Workflow_Report",
+      "column": "id"
+    },
+    "custom_ids": {
+      "source": "workflow_customreport",
+      "column": "id"
+    },
+    "model_report_ids": {
+      "source": "mode_report",
+      "column": "id"
+    },
+    "search_ids": {
+      "source": "mode_customsearch",
+      "column": "id"
+    },
+    "mould_ids": {
+      "source": "WorkflowRptCondMould",
+      "column": "id"
+    },
+    "template_ids": {
+      "source": "workflow_customreport_template",
+      "column": "id"
+    },
+    "type_ids": {
+      "source": "Workflow_Report",
+      "column": "reporttype"
+    },
+    "report_mode_ids": {
+      "sources": [
+        "mode_report",
+        "mode_customsearch"
+      ],
+      "column": "modeid"
+    }
+  },
+  "sources": {
+    "B06_modeinfo": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "modename": {
+          "source_name": "modename",
+          "data_type": "varchar"
+        },
+        "modedesc": {
+          "source_name": "modedesc",
+          "data_type": "varchar"
+        },
+        "modetype": {
+          "source_name": "modetype",
+          "data_type": "int"
+        },
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "maincategory": {
+          "source_name": "maincategory",
+          "data_type": "int"
+        },
+        "subcategory": {
+          "source_name": "subcategory",
+          "data_type": "int"
+        },
+        "seccategory": {
+          "source_name": "seccategory",
+          "data_type": "int"
+        },
+        "modecode": {
+          "source_name": "modecode",
+          "data_type": "varchar"
+        },
+        "isdelete": {
+          "source_name": "isdelete",
+          "data_type": "int"
+        },
+        "subcompanyid": {
+          "source_name": "subcompanyid",
+          "data_type": "int"
+        },
+        "custompage": {
+          "source_name": "custompage",
+          "data_type": "varchar"
+        },
+        "DefaultShared": {
+          "source_name": "DefaultShared",
+          "data_type": "char"
+        },
+        "NonDefaultShared": {
+          "source_name": "NonDefaultShared",
+          "data_type": "char"
+        },
+        "issharding": {
+          "source_name": "issharding",
+          "data_type": "int"
+        },
+        "ismigrated": {
+          "source_name": "ismigrated",
+          "data_type": "int"
+        },
+        "iseasy": {
+          "source_name": "iseasy",
+          "data_type": "int"
+        },
+        "iseasydtable": {
+          "source_name": "iseasydtable",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[modename] AS [modename],r.[modedesc] AS [modedesc],r.[modetype] AS [modetype],r.[formid] AS [formid],r.[maincategory] AS [maincategory],r.[subcategory] AS [subcategory],r.[seccategory] AS [seccategory],r.[modecode] AS [modecode],r.[isdelete] AS [isdelete],r.[subcompanyid] AS [subcompanyid],r.[custompage] AS [custompage],r.[DefaultShared] AS [DefaultShared],r.[NonDefaultShared] AS [NonDefaultShared],r.[issharding] AS [issharding],r.[ismigrated] AS [ismigrated],r.[iseasy] AS [iseasy],r.[iseasydtable] AS [iseasydtable] FROM dbo.[modeinfo] r WHERE r.[id] IN ({mode_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "object_name": "modeinfo",
+      "scope_types": {
+        "mode_ids": "int"
+      }
+    },
+    "B06_workflow_bill": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "namelabel": {
+          "source_name": "namelabel",
+          "data_type": "int"
+        },
+        "tablename": {
+          "source_name": "tablename",
+          "data_type": "varchar"
+        },
+        "detailtablename": {
+          "source_name": "detailtablename",
+          "data_type": "varchar"
+        },
+        "detailkeyfield": {
+          "source_name": "detailkeyfield",
+          "data_type": "varchar"
+        },
+        "invalid": {
+          "source_name": "invalid",
+          "data_type": "int"
+        },
+        "formdes": {
+          "source_name": "formdes",
+          "data_type": "varchar"
+        },
+        "from_module_": {
+          "source_name": "from_module_",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[namelabel] AS [namelabel],r.[tablename] AS [tablename],r.[detailtablename] AS [detailtablename],r.[detailkeyfield] AS [detailkeyfield],r.[invalid] AS [invalid],r.[formdes] AS [formdes],r.[from_module_] AS [from_module_] FROM dbo.[workflow_bill] r WHERE r.[id] IN ({form_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "object_name": "workflow_bill",
+      "scope_types": {
+        "form_ids": "int"
+      }
+    },
+    "B06_workflow_billfield": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "billid": {
+          "source_name": "billid",
+          "data_type": "int"
+        },
+        "fieldname": {
+          "source_name": "fieldname",
+          "data_type": "varchar"
+        },
+        "fieldlabel": {
+          "source_name": "fieldlabel",
+          "data_type": "int"
+        },
+        "fielddbtype": {
+          "source_name": "fielddbtype",
+          "data_type": "varchar"
+        },
+        "fieldhtmltype": {
+          "source_name": "fieldhtmltype",
+          "data_type": "char"
+        },
+        "type": {
+          "source_name": "type",
+          "data_type": "int"
+        },
+        "viewtype": {
+          "source_name": "viewtype",
+          "data_type": "int"
+        },
+        "detailtable": {
+          "source_name": "detailtable",
+          "data_type": "varchar"
+        },
+        "dsporder": {
+          "source_name": "dsporder",
+          "data_type": "decimal"
+        },
+        "childfieldid": {
+          "source_name": "childfieldid",
+          "data_type": "int"
+        },
+        "selectitem": {
+          "source_name": "selectitem",
+          "data_type": "int"
+        },
+        "linkfield": {
+          "source_name": "linkfield",
+          "data_type": "int"
+        },
+        "selectitemtype": {
+          "source_name": "selectItemType",
+          "data_type": "char"
+        },
+        "pubchoiceid": {
+          "source_name": "pubchoiceId",
+          "data_type": "int"
+        },
+        "pubchilchoiceid": {
+          "source_name": "pubchilchoiceId",
+          "data_type": "int"
+        },
+        "fieldgroupid": {
+          "source_name": "fieldgroupid",
+          "data_type": "int"
+        },
+        "isencrypt": {
+          "source_name": "isencrypt",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[billid] AS [billid],r.[fieldname] AS [fieldname],r.[fieldlabel] AS [fieldlabel],r.[fielddbtype] AS [fielddbtype],r.[fieldhtmltype] AS [fieldhtmltype],r.[type] AS [type],r.[viewtype] AS [viewtype],r.[detailtable] AS [detailtable],r.[dsporder] AS [dsporder],r.[childfieldid] AS [childfieldid],r.[selectitem] AS [selectitem],r.[linkfield] AS [linkfield],r.[selectItemType] AS [selectitemtype],r.[pubchoiceId] AS [pubchoiceid],r.[pubchilchoiceId] AS [pubchilchoiceid],r.[fieldgroupid] AS [fieldgroupid],r.[isencrypt] AS [isencrypt] FROM dbo.[workflow_billfield] r WHERE r.[billid] IN ({form_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "object_name": "workflow_billfield",
+      "scope_types": {
+        "form_ids": "int"
+      }
+    },
+    "B06_Workflow_billdetailtable": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "billid": {
+          "source_name": "billid",
+          "data_type": "int"
+        },
+        "tablename": {
+          "source_name": "tablename",
+          "data_type": "varchar"
+        },
+        "title": {
+          "source_name": "title",
+          "data_type": "varchar"
+        },
+        "orderid": {
+          "source_name": "orderid",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[billid] AS [billid],r.[tablename] AS [tablename],r.[title] AS [title],r.[orderid] AS [orderid] FROM dbo.[Workflow_billdetailtable] r WHERE r.[billid] IN ({form_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "object_name": "Workflow_billdetailtable",
+      "scope_types": {
+        "form_ids": "int"
+      }
+    },
+    "B06_workflow_formbase": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "formname": {
+          "source_name": "formname",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[formname] AS [formname] FROM dbo.[workflow_formbase] WHERE id IN (SELECT formid FROM dbo.workflow_base WHERE isbill='0')",
+      "order_by": "id",
+      "row_cap": 50000,
+      "object_name": "workflow_formbase",
+      "role": "anchor"
+    },
+    "B06_workflow_formfield": {
+      "columns": {
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "fieldid": {
+          "source_name": "fieldid",
+          "data_type": "int"
+        },
+        "fieldparameter": {
+          "source_name": "fieldparameter",
+          "data_type": "varchar"
+        },
+        "ismultirows": {
+          "source_name": "ismultirows",
+          "data_type": "char"
+        },
+        "fieldorder": {
+          "source_name": "fieldorder",
+          "data_type": "int"
+        },
+        "isdetail": {
+          "source_name": "isdetail",
+          "data_type": "char"
+        },
+        "groupId": {
+          "source_name": "groupId",
+          "data_type": "int"
+        },
+        "fieldgroupid": {
+          "source_name": "fieldgroupid",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT [formid] AS [formid],[fieldid] AS [fieldid],[fieldparameter] AS [fieldparameter],[ismultirows] AS [ismultirows],[fieldorder] AS [fieldorder],[isdetail] AS [isdetail],[groupId] AS [groupId],[fieldgroupid] AS [fieldgroupid] FROM dbo.[workflow_formfield] WHERE formid IN (SELECT formid FROM dbo.workflow_base WHERE isbill='0')",
+      "order_by": "formid,fieldid,isdetail,groupId,fieldorder",
+      "row_cap": 50000,
+      "object_name": "workflow_formfield",
+      "role": "anchor"
+    },
+    "B06_workflow_formdict": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "fieldname": {
+          "source_name": "fieldname",
+          "data_type": "varchar"
+        },
+        "fielddbtype": {
+          "source_name": "fielddbtype",
+          "data_type": "varchar"
+        },
+        "fieldhtmltype": {
+          "source_name": "fieldhtmltype",
+          "data_type": "char"
+        },
+        "type": {
+          "source_name": "type",
+          "data_type": "int"
+        },
+        "description": {
+          "source_name": "description",
+          "data_type": "varchar"
+        },
+        "childfieldid": {
+          "source_name": "childfieldid",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[fieldname] AS [fieldname],[fielddbtype] AS [fielddbtype],[fieldhtmltype] AS [fieldhtmltype],[type] AS [type],[description] AS [description],[childfieldid] AS [childfieldid] FROM dbo.[workflow_formdict] WHERE id IN (SELECT fieldid FROM dbo.workflow_formfield WHERE formid IN (SELECT formid FROM dbo.workflow_base WHERE isbill='0'))",
+      "order_by": "id",
+      "row_cap": 50000,
+      "object_name": "workflow_formdict",
+      "role": "anchor"
+    },
+    "B06_workflow_formdictdetail": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "fieldname": {
+          "source_name": "fieldname",
+          "data_type": "varchar"
+        },
+        "fielddbtype": {
+          "source_name": "fielddbtype",
+          "data_type": "varchar"
+        },
+        "fieldhtmltype": {
+          "source_name": "fieldhtmltype",
+          "data_type": "char"
+        },
+        "type": {
+          "source_name": "type",
+          "data_type": "int"
+        },
+        "description": {
+          "source_name": "description",
+          "data_type": "varchar"
+        },
+        "childfieldid": {
+          "source_name": "childfieldid",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[fieldname] AS [fieldname],[fielddbtype] AS [fielddbtype],[fieldhtmltype] AS [fieldhtmltype],[type] AS [type],[description] AS [description],[childfieldid] AS [childfieldid] FROM dbo.[workflow_formdictdetail] WHERE id IN (SELECT fieldid FROM dbo.workflow_formfield WHERE formid IN (SELECT formid FROM dbo.workflow_base WHERE isbill='0'))",
+      "order_by": "id",
+      "row_cap": 50000,
+      "object_name": "workflow_formdictdetail",
+      "role": "anchor"
+    },
+    "B06_workflow_fieldlable": {
+      "columns": {
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "fieldid": {
+          "source_name": "fieldid",
+          "data_type": "int"
+        },
+        "fieldlable": {
+          "source_name": "fieldlable",
+          "data_type": "varchar"
+        },
+        "langurageid": {
+          "source_name": "langurageid",
+          "data_type": "int"
+        },
+        "isdefault": {
+          "source_name": "isdefault",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT [formid] AS [formid],[fieldid] AS [fieldid],[fieldlable] AS [fieldlable],[langurageid] AS [langurageid],[isdefault] AS [isdefault] FROM dbo.[workflow_fieldlable] WHERE formid IN (SELECT formid FROM dbo.workflow_base WHERE isbill='0')",
+      "order_by": "formid,fieldid,langurageid,fieldlable,isdefault",
+      "row_cap": 50000,
+      "object_name": "workflow_fieldlable",
+      "role": "anchor"
+    },
+    "B06_HtmlLabelInfo": {
+      "columns": {
+        "indexid": {
+          "source_name": "indexid",
+          "data_type": "int"
+        },
+        "languageid": {
+          "source_name": "languageid",
+          "data_type": "tinyint"
+        },
+        "labelname": {
+          "source_name": "labelname",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT [indexid] AS [indexid],[languageid] AS [languageid],[labelname] AS [labelname] FROM dbo.[HtmlLabelInfo] WHERE languageid=7 AND indexid IN ({label_ids})",
+      "order_by": "indexid,languageid",
+      "row_cap": 50000,
+      "scope_types": {
+        "label_ids": "int"
+      },
+      "partition_scope": "label_ids",
+      "partition_size": 800,
+      "object_name": "HtmlLabelInfo"
+    },
+    "Workflow_Report_scope": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportwfid": {
+          "source_name": "reportwfid",
+          "data_type": "varchar"
+        },
+        "formId": {
+          "source_name": "formId",
+          "data_type": "int"
+        },
+        "isbill": {
+          "source_name": "isbill",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportwfid] AS [reportwfid],r.[formId] AS [formId],r.[isbill] AS [isbill] FROM dbo.[Workflow_Report] r",
+      "order_by": "r.[id]",
+      "row_cap": 2000,
+      "object_name": "Workflow_Report",
+      "role": "scope_directory"
+    },
+    "Workflow_Report": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportname": {
+          "source_name": "reportname",
+          "data_type": "varchar"
+        },
+        "reporttype": {
+          "source_name": "reporttype",
+          "data_type": "int"
+        },
+        "reportwfid": {
+          "source_name": "reportwfid",
+          "data_type": "varchar"
+        },
+        "formId": {
+          "source_name": "formId",
+          "data_type": "int"
+        },
+        "isbill": {
+          "source_name": "isbill",
+          "data_type": "char"
+        },
+        "isShowOnReportOutput": {
+          "source_name": "isShowOnReportOutput",
+          "data_type": "char"
+        },
+        "subCompanyId": {
+          "source_name": "subCompanyId",
+          "data_type": "int"
+        },
+        "fnaVoucherXmlId": {
+          "source_name": "fnaVoucherXmlId",
+          "data_type": "int"
+        },
+        "secLevel": {
+          "source_name": "secLevel",
+          "data_type": "char"
+        },
+        "isDisplayCustomColumn": {
+          "source_name": "isDisplayCustomColumn",
+          "data_type": "char"
+        },
+        "secvalidity": {
+          "source_name": "secvalidity",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportname] AS [reportname],r.[reporttype] AS [reporttype],r.[reportwfid] AS [reportwfid],r.[formId] AS [formId],r.[isbill] AS [isbill],r.[isShowOnReportOutput] AS [isShowOnReportOutput],r.[subCompanyId] AS [subCompanyId],r.[fnaVoucherXmlId] AS [fnaVoucherXmlId],r.[secLevel] AS [secLevel],r.[isDisplayCustomColumn] AS [isDisplayCustomColumn],r.[secvalidity] AS [secvalidity] FROM dbo.Workflow_Report r WHERE r.id IN ({selected_standard_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "selected_standard_ids": "int"
+      }
+    },
+    "workflow_customreport_scope": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "isbill": {
+          "source_name": "isbill",
+          "data_type": "char"
+        },
+        "workflowid": {
+          "source_name": "workflowid",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[formid] AS [formid],r.[isbill] AS [isbill],r.[workflowid] AS [workflowid] FROM dbo.[workflow_customreport] r",
+      "order_by": "r.[id]",
+      "row_cap": 2000,
+      "object_name": "workflow_customreport",
+      "role": "scope_directory"
+    },
+    "workflow_customreport": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportname": {
+          "source_name": "reportname",
+          "data_type": "varchar"
+        },
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "isbill": {
+          "source_name": "isbill",
+          "data_type": "char"
+        },
+        "workflowid": {
+          "source_name": "workflowid",
+          "data_type": "varchar"
+        },
+        "secLevel": {
+          "source_name": "secLevel",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportname] AS [reportname],r.[formid] AS [formid],r.[isbill] AS [isbill],r.[workflowid] AS [workflowid],r.[secLevel] AS [secLevel] FROM dbo.workflow_customreport r WHERE r.id IN ({selected_custom_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "selected_custom_ids": "int"
+      }
+    },
+    "mode_report": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportname": {
+          "source_name": "reportname",
+          "data_type": "varchar"
+        },
+        "formId": {
+          "source_name": "formId",
+          "data_type": "int"
+        },
+        "modeid": {
+          "source_name": "modeid",
+          "data_type": "int"
+        },
+        "reportdesc": {
+          "source_name": "reportdesc",
+          "data_type": "varchar"
+        },
+        "reportnumperpage": {
+          "source_name": "reportnumperpage",
+          "data_type": "int"
+        },
+        "defaultsql": {
+          "source_name": "defaultsql",
+          "data_type": "varchar"
+        },
+        "appid": {
+          "source_name": "appid",
+          "data_type": "int"
+        },
+        "dsporder": {
+          "source_name": "dsporder",
+          "data_type": "float"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportname] AS [reportname],r.[formId] AS [formId],r.[modeid] AS [modeid],r.[reportdesc] AS [reportdesc],r.[reportnumperpage] AS [reportnumperpage],r.[defaultsql] AS [defaultsql],r.[appid] AS [appid],r.[dsporder] AS [dsporder] FROM dbo.[mode_report] r WHERE r.modeid IN ({mode_ids}) OR r.formid IN ({form_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "mode_ids": "int",
+        "form_ids": "int"
+      }
+    },
+    "mode_customsearch": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "modeid": {
+          "source_name": "modeid",
+          "data_type": "int"
+        },
+        "customname": {
+          "source_name": "customname",
+          "data_type": "varchar"
+        },
+        "customdesc": {
+          "source_name": "customdesc",
+          "data_type": "varchar"
+        },
+        "defaultsql": {
+          "source_name": "defaultsql",
+          "data_type": "varchar"
+        },
+        "disQuickSearch": {
+          "source_name": "disQuickSearch",
+          "data_type": "int"
+        },
+        "opentype": {
+          "source_name": "opentype",
+          "data_type": "int"
+        },
+        "norightlist": {
+          "source_name": "norightlist",
+          "data_type": "char"
+        },
+        "searchconditiontype": {
+          "source_name": "searchconditiontype",
+          "data_type": "varchar"
+        },
+        "javafilename": {
+          "source_name": "javafilename",
+          "data_type": "varchar"
+        },
+        "pagenumber": {
+          "source_name": "pagenumber",
+          "data_type": "int"
+        },
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "appid": {
+          "source_name": "appid",
+          "data_type": "int"
+        },
+        "dsporder": {
+          "source_name": "dsporder",
+          "data_type": "float"
+        },
+        "detailtable": {
+          "source_name": "detailtable",
+          "data_type": "varchar"
+        },
+        "customsearchcode": {
+          "source_name": "customsearchcode",
+          "data_type": "varchar"
+        },
+        "iscustom": {
+          "source_name": "iscustom",
+          "data_type": "int"
+        },
+        "isShowQueryCondition": {
+          "source_name": "isShowQueryCondition",
+          "data_type": "int"
+        },
+        "javafileAddress": {
+          "source_name": "javafileAddress",
+          "data_type": "varchar"
+        },
+        "isWatermark": {
+          "source_name": "isWatermark",
+          "data_type": "int"
+        },
+        "sliderPercentage": {
+          "source_name": "sliderPercentage",
+          "data_type": "varchar"
+        },
+        "istreesearch": {
+          "source_name": "istreesearch",
+          "data_type": "int"
+        },
+        "treeposition": {
+          "source_name": "treeposition",
+          "data_type": "varchar"
+        },
+        "disquerycheck": {
+          "source_name": "disquerycheck",
+          "data_type": "int"
+        },
+        "databoard": {
+          "source_name": "databoard",
+          "data_type": "varchar"
+        },
+        "enabled": {
+          "source_name": "enabled",
+          "data_type": "int"
+        },
+        "isupdateenabled": {
+          "source_name": "isupdateenabled",
+          "data_type": "int"
+        },
+        "fixednumberforth": {
+          "source_name": "fixednumberforth",
+          "data_type": "int"
+        },
+        "fixednumberback": {
+          "source_name": "fixednumberback",
+          "data_type": "int"
+        },
+        "conditiontype": {
+          "source_name": "conditiontype",
+          "data_type": "int"
+        },
+        "conditionsql": {
+          "source_name": "conditionsql",
+          "data_type": "text"
+        },
+        "conditiontext": {
+          "source_name": "conditiontext",
+          "data_type": "text"
+        },
+        "datashowtype": {
+          "source_name": "datashowtype",
+          "data_type": "int"
+        },
+        "datashowtypefilefield": {
+          "source_name": "datashowtypefilefield",
+          "data_type": "varchar"
+        },
+        "datashowtypefileicon": {
+          "source_name": "datashowtypefileicon",
+          "data_type": "varchar"
+        },
+        "enabledtop": {
+          "source_name": "enabledtop",
+          "data_type": "int"
+        },
+        "conditiontypetop": {
+          "source_name": "conditiontypetop",
+          "data_type": "int"
+        },
+        "conditionsqltop": {
+          "source_name": "conditionsqltop",
+          "data_type": "text"
+        },
+        "conditiontexttop": {
+          "source_name": "conditiontexttop",
+          "data_type": "text"
+        },
+        "defaultsqltop": {
+          "source_name": "defaultsqltop",
+          "data_type": "varchar"
+        },
+        "javafileaddresstop": {
+          "source_name": "javafileaddresstop",
+          "data_type": "varchar"
+        },
+        "javafilenametop": {
+          "source_name": "javafilenametop",
+          "data_type": "varchar"
+        },
+        "searchconditiontypetop": {
+          "source_name": "searchconditiontypetop",
+          "data_type": "varchar"
+        },
+        "secondPassword": {
+          "source_name": "secondPassword",
+          "data_type": "char"
+        },
+        "syncexport": {
+          "source_name": "syncexport",
+          "data_type": "char"
+        },
+        "excelFixed": {
+          "source_name": "excelFixed",
+          "data_type": "varchar"
+        },
+        "linemergel": {
+          "source_name": "linemergel",
+          "data_type": "char"
+        },
+        "littleCardJson": {
+          "source_name": "littleCardJson",
+          "data_type": "text"
+        },
+        "secondauth": {
+          "source_name": "secondauth",
+          "data_type": "char"
+        },
+        "doubleauth": {
+          "source_name": "doubleauth",
+          "data_type": "int"
+        },
+        "authverifier": {
+          "source_name": "authverifier",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[modeid] AS [modeid],r.[customname] AS [customname],r.[customdesc] AS [customdesc],r.[defaultsql] AS [defaultsql],r.[disQuickSearch] AS [disQuickSearch],r.[opentype] AS [opentype],r.[norightlist] AS [norightlist],r.[searchconditiontype] AS [searchconditiontype],r.[javafilename] AS [javafilename],r.[pagenumber] AS [pagenumber],r.[formid] AS [formid],r.[appid] AS [appid],r.[dsporder] AS [dsporder],r.[detailtable] AS [detailtable],r.[customsearchcode] AS [customsearchcode],r.[iscustom] AS [iscustom],r.[isShowQueryCondition] AS [isShowQueryCondition],r.[javafileAddress] AS [javafileAddress],r.[isWatermark] AS [isWatermark],r.[sliderPercentage] AS [sliderPercentage],r.[istreesearch] AS [istreesearch],r.[treeposition] AS [treeposition],r.[disquerycheck] AS [disquerycheck],r.[databoard] AS [databoard],r.[enabled] AS [enabled],r.[isupdateenabled] AS [isupdateenabled],r.[fixednumberforth] AS [fixednumberforth],r.[fixednumberback] AS [fixednumberback],r.[conditiontype] AS [conditiontype],r.[conditionsql] AS [conditionsql],r.[conditiontext] AS [conditiontext],r.[datashowtype] AS [datashowtype],r.[datashowtypefilefield] AS [datashowtypefilefield],r.[datashowtypefileicon] AS [datashowtypefileicon],r.[enabledtop] AS [enabledtop],r.[conditiontypetop] AS [conditiontypetop],r.[conditionsqltop] AS [conditionsqltop],r.[conditiontexttop] AS [conditiontexttop],r.[defaultsqltop] AS [defaultsqltop],r.[javafileaddresstop] AS [javafileaddresstop],r.[javafilenametop] AS [javafilenametop],r.[searchconditiontypetop] AS [searchconditiontypetop],r.[secondPassword] AS [secondPassword],r.[syncexport] AS [syncexport],r.[excelFixed] AS [excelFixed],r.[linemergel] AS [linemergel],r.[littleCardJson] AS [littleCardJson],r.[secondauth] AS [secondauth],r.[doubleauth] AS [doubleauth],r.[authverifier] AS [authverifier] FROM dbo.[mode_customsearch] r WHERE r.modeid IN ({mode_ids}) OR r.formid IN ({form_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "mode_ids": "int",
+        "form_ids": "int"
+      }
+    },
+    "modeinfo": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "modename": {
+          "source_name": "modename",
+          "data_type": "varchar"
+        },
+        "modedesc": {
+          "source_name": "modedesc",
+          "data_type": "varchar"
+        },
+        "modetype": {
+          "source_name": "modetype",
+          "data_type": "int"
+        },
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "maincategory": {
+          "source_name": "maincategory",
+          "data_type": "int"
+        },
+        "subcategory": {
+          "source_name": "subcategory",
+          "data_type": "int"
+        },
+        "seccategory": {
+          "source_name": "seccategory",
+          "data_type": "int"
+        },
+        "modecode": {
+          "source_name": "modecode",
+          "data_type": "varchar"
+        },
+        "isdelete": {
+          "source_name": "isdelete",
+          "data_type": "int"
+        },
+        "subcompanyid": {
+          "source_name": "subcompanyid",
+          "data_type": "int"
+        },
+        "custompage": {
+          "source_name": "custompage",
+          "data_type": "varchar"
+        },
+        "DefaultShared": {
+          "source_name": "DefaultShared",
+          "data_type": "char"
+        },
+        "NonDefaultShared": {
+          "source_name": "NonDefaultShared",
+          "data_type": "char"
+        },
+        "issharding": {
+          "source_name": "issharding",
+          "data_type": "int"
+        },
+        "ismigrated": {
+          "source_name": "ismigrated",
+          "data_type": "int"
+        },
+        "iseasy": {
+          "source_name": "iseasy",
+          "data_type": "int"
+        },
+        "iseasydtable": {
+          "source_name": "iseasydtable",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT [id] AS [id],[modename] AS [modename],[modedesc] AS [modedesc],[modetype] AS [modetype],[formid] AS [formid],[maincategory] AS [maincategory],[subcategory] AS [subcategory],[seccategory] AS [seccategory],[modecode] AS [modecode],[isdelete] AS [isdelete],[subcompanyid] AS [subcompanyid],[custompage] AS [custompage],[DefaultShared] AS [DefaultShared],[NonDefaultShared] AS [NonDefaultShared],[issharding] AS [issharding],[ismigrated] AS [ismigrated],[iseasy] AS [iseasy],[iseasydtable] AS [iseasydtable] FROM dbo.[modeinfo] WHERE id IN ({report_mode_ids})",
+      "order_by": "id",
+      "row_cap": 50000,
+      "scope_types": {
+        "report_mode_ids": "int"
+      }
+    },
+    "Workflow_ReportDspField": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportid": {
+          "source_name": "reportid",
+          "data_type": "int"
+        },
+        "fieldid": {
+          "source_name": "fieldid",
+          "data_type": "int"
+        },
+        "dsporder": {
+          "source_name": "dsporder",
+          "data_type": "numeric"
+        },
+        "isstat": {
+          "source_name": "isstat",
+          "data_type": "char"
+        },
+        "dborder": {
+          "source_name": "dborder",
+          "data_type": "char"
+        },
+        "dbordertype": {
+          "source_name": "dbordertype",
+          "data_type": "char"
+        },
+        "compositororder": {
+          "source_name": "compositororder",
+          "data_type": "int"
+        },
+        "fieldidbak": {
+          "source_name": "fieldidbak",
+          "data_type": "int"
+        },
+        "fieldwidth": {
+          "source_name": "fieldwidth",
+          "data_type": "numeric"
+        },
+        "reportcondition": {
+          "source_name": "reportcondition",
+          "data_type": "int"
+        },
+        "httype": {
+          "source_name": "httype",
+          "data_type": "varchar"
+        },
+        "htdetailtype": {
+          "source_name": "htdetailtype",
+          "data_type": "varchar"
+        },
+        "valuefour": {
+          "source_name": "valuefour",
+          "data_type": "varchar"
+        },
+        "valueone": {
+          "source_name": "valueone",
+          "data_type": "varchar"
+        },
+        "valuethree": {
+          "source_name": "valuethree",
+          "data_type": "varchar"
+        },
+        "valuetwo": {
+          "source_name": "valuetwo",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportid] AS [reportid],r.[fieldid] AS [fieldid],r.[dsporder] AS [dsporder],r.[isstat] AS [isstat],r.[dborder] AS [dborder],r.[dbordertype] AS [dbordertype],r.[compositororder] AS [compositororder],r.[fieldidbak] AS [fieldidbak],r.[fieldwidth] AS [fieldwidth],r.[reportcondition] AS [reportcondition],r.[httype] AS [httype],r.[htdetailtype] AS [htdetailtype],r.[valuefour] AS [valuefour],r.[valueone] AS [valueone],r.[valuethree] AS [valuethree],r.[valuetwo] AS [valuetwo] FROM dbo.[Workflow_ReportDspField] r WHERE r.[reportid] IN ({standard_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "standard_ids": "int"
+      }
+    },
+    "WorkflowReportShare": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportid": {
+          "source_name": "reportid",
+          "data_type": "int"
+        },
+        "sharetype": {
+          "source_name": "sharetype",
+          "data_type": "int"
+        },
+        "seclevelbak": {
+          "source_name": "seclevelbak",
+          "data_type": "tinyint"
+        },
+        "rolelevel": {
+          "source_name": "rolelevel",
+          "data_type": "tinyint"
+        },
+        "sharelevel": {
+          "source_name": "sharelevel",
+          "data_type": "tinyint"
+        },
+        "useridbak": {
+          "source_name": "useridbak",
+          "data_type": "int"
+        },
+        "subcompanyidbak": {
+          "source_name": "subcompanyidbak",
+          "data_type": "int"
+        },
+        "departmentidbak": {
+          "source_name": "departmentidbak",
+          "data_type": "int"
+        },
+        "roleidbak": {
+          "source_name": "roleidbak",
+          "data_type": "int"
+        },
+        "foralluser": {
+          "source_name": "foralluser",
+          "data_type": "tinyint"
+        },
+        "crmid": {
+          "source_name": "crmid",
+          "data_type": "int"
+        },
+        "mutidepartmentid": {
+          "source_name": "mutidepartmentid",
+          "data_type": "varchar"
+        },
+        "userid": {
+          "source_name": "userid",
+          "data_type": "varchar"
+        },
+        "departmentid": {
+          "source_name": "departmentid",
+          "data_type": "varchar"
+        },
+        "subcompanyid": {
+          "source_name": "subcompanyid",
+          "data_type": "varchar"
+        },
+        "roleid": {
+          "source_name": "roleid",
+          "data_type": "varchar"
+        },
+        "seclevel": {
+          "source_name": "seclevel",
+          "data_type": "int"
+        },
+        "allowlook": {
+          "source_name": "allowlook",
+          "data_type": "int"
+        },
+        "seclevel2": {
+          "source_name": "seclevel2",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportid] AS [reportid],r.[sharetype] AS [sharetype],r.[seclevelbak] AS [seclevelbak],r.[rolelevel] AS [rolelevel],r.[sharelevel] AS [sharelevel],r.[useridbak] AS [useridbak],r.[subcompanyidbak] AS [subcompanyidbak],r.[departmentidbak] AS [departmentidbak],r.[roleidbak] AS [roleidbak],r.[foralluser] AS [foralluser],r.[crmid] AS [crmid],r.[mutidepartmentid] AS [mutidepartmentid],r.[userid] AS [userid],r.[departmentid] AS [departmentid],r.[subcompanyid] AS [subcompanyid],r.[roleid] AS [roleid],r.[seclevel] AS [seclevel],r.[allowlook] AS [allowlook],r.[seclevel2] AS [seclevel2] FROM dbo.[WorkflowReportShare] r WHERE r.[reportid] IN ({standard_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "standard_ids": "int"
+      }
+    },
+    "WorkflowRptCondMould": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "mouldName": {
+          "source_name": "mouldName",
+          "data_type": "varchar"
+        },
+        "userId": {
+          "source_name": "userId",
+          "data_type": "int"
+        },
+        "reportId": {
+          "source_name": "reportId",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[mouldName] AS [mouldName],r.[userId] AS [userId],r.[reportId] AS [reportId] FROM dbo.[WorkflowRptCondMould] r WHERE r.[reportId] IN ({standard_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "standard_ids": "int"
+      }
+    },
+    "WorkflowRptCondMouldDetail": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "mouldId": {
+          "source_name": "mouldId",
+          "data_type": "int"
+        },
+        "fieldId": {
+          "source_name": "fieldId",
+          "data_type": "int"
+        },
+        "isMain": {
+          "source_name": "isMain",
+          "data_type": "char"
+        },
+        "isShow": {
+          "source_name": "isShow",
+          "data_type": "char"
+        },
+        "isCheckCond": {
+          "source_name": "isCheckCond",
+          "data_type": "char"
+        },
+        "colName": {
+          "source_name": "colName",
+          "data_type": "varchar"
+        },
+        "htmlType": {
+          "source_name": "htmlType",
+          "data_type": "char"
+        },
+        "type": {
+          "source_name": "type",
+          "data_type": "int"
+        },
+        "optionFirst": {
+          "source_name": "optionFirst",
+          "data_type": "char"
+        },
+        "valueFirst": {
+          "source_name": "valueFirst",
+          "data_type": "varchar"
+        },
+        "nameFirst": {
+          "source_name": "nameFirst",
+          "data_type": "varchar"
+        },
+        "optionSecond": {
+          "source_name": "optionSecond",
+          "data_type": "char"
+        },
+        "valueSecond": {
+          "source_name": "valueSecond",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[mouldId] AS [mouldId],r.[fieldId] AS [fieldId],r.[isMain] AS [isMain],r.[isShow] AS [isShow],r.[isCheckCond] AS [isCheckCond],r.[colName] AS [colName],r.[htmlType] AS [htmlType],r.[type] AS [type],r.[optionFirst] AS [optionFirst],r.[valueFirst] AS [valueFirst],r.[nameFirst] AS [nameFirst],r.[optionSecond] AS [optionSecond],r.[valueSecond] AS [valueSecond] FROM dbo.[WorkflowRptCondMouldDetail] r WHERE r.[mouldId] IN ({mould_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "mould_ids": "int"
+      }
+    },
+    "workflow_customreport_field": {
+      "columns": {
+        "reportid": {
+          "source_name": "reportid",
+          "data_type": "int"
+        },
+        "fieldid": {
+          "source_name": "fieldid",
+          "data_type": "int"
+        },
+        "tablename": {
+          "source_name": "tablename",
+          "data_type": "varchar"
+        },
+        "isdetail": {
+          "source_name": "isdetail",
+          "data_type": "char"
+        },
+        "isshow": {
+          "source_name": "isshow",
+          "data_type": "char"
+        },
+        "showorder": {
+          "source_name": "showorder",
+          "data_type": "int"
+        },
+        "colwidth": {
+          "source_name": "colwidth",
+          "data_type": "varchar"
+        },
+        "isgroup": {
+          "source_name": "isgroup",
+          "data_type": "char"
+        },
+        "sortby": {
+          "source_name": "sortby",
+          "data_type": "char"
+        },
+        "sortOrder": {
+          "source_name": "sortOrder",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[reportid] AS [reportid],r.[fieldid] AS [fieldid],r.[tablename] AS [tablename],r.[isdetail] AS [isdetail],r.[isshow] AS [isshow],r.[showorder] AS [showorder],r.[colwidth] AS [colwidth],r.[isgroup] AS [isgroup],r.[sortby] AS [sortby],r.[sortOrder] AS [sortOrder] FROM dbo.[workflow_customreport_field] r WHERE r.[reportid] IN ({custom_ids})",
+      "order_by": "r.[reportid],r.[fieldid],r.[tablename],r.[isdetail],r.[isshow],r.[showorder],r.[colwidth],r.[isgroup],r.[sortby],r.[sortOrder]",
+      "row_cap": 50000,
+      "scope_types": {
+        "custom_ids": "int"
+      }
+    },
+    "workflow_customreport_project": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportid": {
+          "source_name": "reportid",
+          "data_type": "int"
+        },
+        "projectname": {
+          "source_name": "projectname",
+          "data_type": "varchar"
+        },
+        "formula": {
+          "source_name": "formula",
+          "data_type": "varchar"
+        },
+        "formulaDesc": {
+          "source_name": "formulaDesc",
+          "data_type": "varchar"
+        },
+        "showorder": {
+          "source_name": "showorder",
+          "data_type": "int"
+        },
+        "sortby": {
+          "source_name": "sortby",
+          "data_type": "char"
+        },
+        "sortOrder": {
+          "source_name": "sortOrder",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportid] AS [reportid],r.[projectname] AS [projectname],r.[formula] AS [formula],r.[formulaDesc] AS [formulaDesc],r.[showorder] AS [showorder],r.[sortby] AS [sortby],r.[sortOrder] AS [sortOrder] FROM dbo.[workflow_customreport_project] r WHERE r.[reportid] IN ({custom_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "custom_ids": "int"
+      }
+    },
+    "workflow_customreport_share": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportid": {
+          "source_name": "reportid",
+          "data_type": "int"
+        },
+        "sharetype": {
+          "source_name": "sharetype",
+          "data_type": "char"
+        },
+        "sharedobj": {
+          "source_name": "sharedobj",
+          "data_type": "varchar"
+        },
+        "seclevel": {
+          "source_name": "seclevel",
+          "data_type": "char"
+        },
+        "seclevelmax": {
+          "source_name": "seclevelmax",
+          "data_type": "char"
+        },
+        "sharelevel": {
+          "source_name": "sharelevel",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportid] AS [reportid],r.[sharetype] AS [sharetype],r.[sharedobj] AS [sharedobj],r.[seclevel] AS [seclevel],r.[seclevelmax] AS [seclevelmax],r.[sharelevel] AS [sharelevel] FROM dbo.[workflow_customreport_share] r WHERE r.[reportid] IN ({custom_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "custom_ids": "int"
+      }
+    },
+    "workflow_customreport_template": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportid": {
+          "source_name": "reportid",
+          "data_type": "int"
+        },
+        "templatename": {
+          "source_name": "templatename",
+          "data_type": "varchar"
+        },
+        "owner": {
+          "source_name": "owner",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportid] AS [reportid],r.[templatename] AS [templatename],r.[owner] AS [owner] FROM dbo.[workflow_customreport_template] r WHERE r.[reportid] IN ({custom_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "custom_ids": "int"
+      }
+    },
+    "workflow_customreport_tfield": {
+      "columns": {
+        "templateid": {
+          "source_name": "templateid",
+          "data_type": "int"
+        },
+        "fieldid": {
+          "source_name": "fieldid",
+          "data_type": "int"
+        },
+        "opt1": {
+          "source_name": "opt1",
+          "data_type": "varchar"
+        },
+        "value1": {
+          "source_name": "value1",
+          "data_type": "varchar"
+        },
+        "opt2": {
+          "source_name": "opt2",
+          "data_type": "varchar"
+        },
+        "value2": {
+          "source_name": "value2",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT r.[templateid] AS [templateid],r.[fieldid] AS [fieldid],r.[opt1] AS [opt1],r.[value1] AS [value1],r.[opt2] AS [opt2],r.[value2] AS [value2] FROM dbo.[workflow_customreport_tfield] r WHERE r.[templateid] IN ({template_ids})",
+      "order_by": "r.[templateid],r.[fieldid],r.[opt1],r.[value1],r.[opt2],r.[value2]",
+      "row_cap": 50000,
+      "scope_types": {
+        "template_ids": "int"
+      }
+    },
+    "mode_ReportDspField": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportid": {
+          "source_name": "reportid",
+          "data_type": "int"
+        },
+        "fieldid": {
+          "source_name": "fieldid",
+          "data_type": "int"
+        },
+        "dsporder": {
+          "source_name": "dsporder",
+          "data_type": "numeric"
+        },
+        "isstat": {
+          "source_name": "isstat",
+          "data_type": "char"
+        },
+        "dborder": {
+          "source_name": "dborder",
+          "data_type": "char"
+        },
+        "compositororder": {
+          "source_name": "compositororder",
+          "data_type": "int"
+        },
+        "dbordertype": {
+          "source_name": "dbordertype",
+          "data_type": "char"
+        },
+        "isshow": {
+          "source_name": "isshow",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportid] AS [reportid],r.[fieldid] AS [fieldid],r.[dsporder] AS [dsporder],r.[isstat] AS [isstat],r.[dborder] AS [dborder],r.[compositororder] AS [compositororder],r.[dbordertype] AS [dbordertype],r.[isshow] AS [isshow] FROM dbo.[mode_ReportDspField] r WHERE r.[reportid] IN ({model_report_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "model_report_ids": "int"
+      }
+    },
+    "mode_reportshareinfo": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "reportid": {
+          "source_name": "reportid",
+          "data_type": "int"
+        },
+        "righttype": {
+          "source_name": "righttype",
+          "data_type": "int"
+        },
+        "sharetype": {
+          "source_name": "sharetype",
+          "data_type": "int"
+        },
+        "relatedid": {
+          "source_name": "relatedid",
+          "data_type": "int"
+        },
+        "rolelevel": {
+          "source_name": "rolelevel",
+          "data_type": "int"
+        },
+        "showlevel": {
+          "source_name": "showlevel",
+          "data_type": "int"
+        },
+        "showlevel2": {
+          "source_name": "showlevel2",
+          "data_type": "int"
+        },
+        "hrmCompanyVirtualType": {
+          "source_name": "hrmCompanyVirtualType",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[reportid] AS [reportid],r.[righttype] AS [righttype],r.[sharetype] AS [sharetype],r.[relatedid] AS [relatedid],r.[rolelevel] AS [rolelevel],r.[showlevel] AS [showlevel],r.[showlevel2] AS [showlevel2],r.[hrmCompanyVirtualType] AS [hrmCompanyVirtualType] FROM dbo.[mode_reportshareinfo] r WHERE r.[reportid] IN ({model_report_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "model_report_ids": "int"
+      }
+    },
+    "mode_CustomDspField": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "customid": {
+          "source_name": "customid",
+          "data_type": "int"
+        },
+        "fieldid": {
+          "source_name": "fieldid",
+          "data_type": "int"
+        },
+        "isquery": {
+          "source_name": "isquery",
+          "data_type": "char"
+        },
+        "isshow": {
+          "source_name": "isshow",
+          "data_type": "char"
+        },
+        "showorder": {
+          "source_name": "showorder",
+          "data_type": "int"
+        },
+        "queryorder": {
+          "source_name": "queryorder",
+          "data_type": "int"
+        },
+        "istitle": {
+          "source_name": "istitle",
+          "data_type": "char"
+        },
+        "colwidth": {
+          "source_name": "colwidth",
+          "data_type": "decimal"
+        },
+        "isorder": {
+          "source_name": "isorder",
+          "data_type": "int"
+        },
+        "ordertype": {
+          "source_name": "ordertype",
+          "data_type": "varchar"
+        },
+        "ordernum": {
+          "source_name": "ordernum",
+          "data_type": "int"
+        },
+        "isstat": {
+          "source_name": "isstat",
+          "data_type": "char"
+        },
+        "iskey": {
+          "source_name": "iskey",
+          "data_type": "int"
+        },
+        "isorderfield": {
+          "source_name": "isorderfield",
+          "data_type": "int"
+        },
+        "priorder": {
+          "source_name": "priorder",
+          "data_type": "char"
+        },
+        "hreflink": {
+          "source_name": "hreflink",
+          "data_type": "varchar"
+        },
+        "showmethod": {
+          "source_name": "showmethod",
+          "data_type": "int"
+        },
+        "isgroup": {
+          "source_name": "isgroup",
+          "data_type": "char"
+        },
+        "searchparaname": {
+          "source_name": "searchparaname",
+          "data_type": "varchar"
+        },
+        "searchparaname1": {
+          "source_name": "searchparaname1",
+          "data_type": "varchar"
+        },
+        "isadvancedquery": {
+          "source_name": "isadvancedquery",
+          "data_type": "char"
+        },
+        "advancedqueryorder": {
+          "source_name": "advancedqueryorder",
+          "data_type": "int"
+        },
+        "conditionTransition": {
+          "source_name": "conditionTransition",
+          "data_type": "int"
+        },
+        "ismaplocation": {
+          "source_name": "ismaplocation",
+          "data_type": "int"
+        },
+        "shownamelabel": {
+          "source_name": "shownamelabel",
+          "data_type": "int"
+        },
+        "editable": {
+          "source_name": "editable",
+          "data_type": "varchar"
+        },
+        "ALIGNMENT": {
+          "source_name": "ALIGNMENT",
+          "data_type": "int"
+        },
+        "addable": {
+          "source_name": "addable",
+          "data_type": "varchar"
+        },
+        "requiredCon": {
+          "source_name": "requiredCon",
+          "data_type": "int"
+        },
+        "conditionValue": {
+          "source_name": "conditionValue",
+          "data_type": "text"
+        },
+        "conditionValue1": {
+          "source_name": "conditionValue1",
+          "data_type": "text"
+        },
+        "conditionValue2": {
+          "source_name": "conditionValue2",
+          "data_type": "text"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[customid] AS [customid],r.[fieldid] AS [fieldid],r.[isquery] AS [isquery],r.[isshow] AS [isshow],r.[showorder] AS [showorder],r.[queryorder] AS [queryorder],r.[istitle] AS [istitle],r.[colwidth] AS [colwidth],r.[isorder] AS [isorder],r.[ordertype] AS [ordertype],r.[ordernum] AS [ordernum],r.[isstat] AS [isstat],r.[iskey] AS [iskey],r.[isorderfield] AS [isorderfield],r.[priorder] AS [priorder],r.[hreflink] AS [hreflink],r.[showmethod] AS [showmethod],r.[isgroup] AS [isgroup],r.[searchparaname] AS [searchparaname],r.[searchparaname1] AS [searchparaname1],r.[isadvancedquery] AS [isadvancedquery],r.[advancedqueryorder] AS [advancedqueryorder],r.[conditionTransition] AS [conditionTransition],r.[ismaplocation] AS [ismaplocation],r.[shownamelabel] AS [shownamelabel],r.[editable] AS [editable],r.[ALIGNMENT] AS [ALIGNMENT],r.[addable] AS [addable],r.[requiredCon] AS [requiredCon],r.[conditionValue] AS [conditionValue],r.[conditionValue1] AS [conditionValue1],r.[conditionValue2] AS [conditionValue2] FROM dbo.[mode_CustomDspField] r WHERE r.[customid] IN ({search_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "search_ids": "int"
+      }
+    },
+    "mode_customsearchgroup": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "customid": {
+          "source_name": "customid",
+          "data_type": "int"
+        },
+        "groupname": {
+          "source_name": "groupname",
+          "data_type": "varchar"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[customid] AS [customid],r.[groupname] AS [groupname] FROM dbo.[mode_customsearchgroup] r WHERE r.[customid] IN ({search_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "search_ids": "int"
+      }
+    },
+    "mode_quicksearch_condition": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "customid": {
+          "source_name": "customid",
+          "data_type": "int"
+        },
+        "fieldid": {
+          "source_name": "fieldid",
+          "data_type": "int"
+        },
+        "customname": {
+          "source_name": "customname",
+          "data_type": "varchar"
+        },
+        "type": {
+          "source_name": "type",
+          "data_type": "int"
+        },
+        "orderid": {
+          "source_name": "orderid",
+          "data_type": "float"
+        },
+        "groupid": {
+          "source_name": "groupid",
+          "data_type": "int"
+        },
+        "showmodel": {
+          "source_name": "showmodel",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[customid] AS [customid],r.[fieldid] AS [fieldid],r.[customname] AS [customname],r.[type] AS [type],r.[orderid] AS [orderid],r.[groupid] AS [groupid],r.[showmodel] AS [showmodel] FROM dbo.[mode_quicksearch_condition] r WHERE r.[customid] IN ({search_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "search_ids": "int"
+      }
+    },
+    "mode_searchPageshareinfo": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "pageid": {
+          "source_name": "pageid",
+          "data_type": "int"
+        },
+        "righttype": {
+          "source_name": "righttype",
+          "data_type": "int"
+        },
+        "sharetype": {
+          "source_name": "sharetype",
+          "data_type": "int"
+        },
+        "relatedid": {
+          "source_name": "relatedid",
+          "data_type": "int"
+        },
+        "rolelevel": {
+          "source_name": "rolelevel",
+          "data_type": "int"
+        },
+        "showlevel": {
+          "source_name": "showlevel",
+          "data_type": "int"
+        },
+        "layoutid": {
+          "source_name": "layoutid",
+          "data_type": "int"
+        },
+        "layoutid1": {
+          "source_name": "layoutid1",
+          "data_type": "int"
+        },
+        "layoutorder": {
+          "source_name": "layoutorder",
+          "data_type": "int"
+        },
+        "showlevel2": {
+          "source_name": "showlevel2",
+          "data_type": "int"
+        },
+        "hrmCompanyVirtualType": {
+          "source_name": "hrmCompanyVirtualType",
+          "data_type": "int"
+        },
+        "joblevel": {
+          "source_name": "joblevel",
+          "data_type": "int"
+        },
+        "jobleveltext": {
+          "source_name": "jobleveltext",
+          "data_type": "varchar"
+        },
+        "browsersharetype": {
+          "source_name": "browsersharetype",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[pageid] AS [pageid],r.[righttype] AS [righttype],r.[sharetype] AS [sharetype],r.[relatedid] AS [relatedid],r.[rolelevel] AS [rolelevel],r.[showlevel] AS [showlevel],r.[layoutid] AS [layoutid],r.[layoutid1] AS [layoutid1],r.[layoutorder] AS [layoutorder],r.[showlevel2] AS [showlevel2],r.[hrmCompanyVirtualType] AS [hrmCompanyVirtualType],r.[joblevel] AS [joblevel],r.[jobleveltext] AS [jobleveltext],r.[browsersharetype] AS [browsersharetype] FROM dbo.[mode_searchPageshareinfo] r WHERE r.[pageid] IN ({search_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "search_ids": "int"
+      }
+    },
+    "ModeFormExtend": {
+      "columns": {
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "appid": {
+          "source_name": "appid",
+          "data_type": "int"
+        },
+        "isvirtualform": {
+          "source_name": "isvirtualform",
+          "data_type": "varchar"
+        },
+        "virtualformtype": {
+          "source_name": "virtualformtype",
+          "data_type": "varchar"
+        },
+        "vdatasource": {
+          "source_name": "vdatasource",
+          "data_type": "varchar"
+        },
+        "vprimarykey": {
+          "source_name": "vprimarykey",
+          "data_type": "varchar"
+        },
+        "vpkgentype": {
+          "source_name": "vpkgentype",
+          "data_type": "varchar"
+        },
+        "vformtype": {
+          "source_name": "vformtype",
+          "data_type": "varchar"
+        },
+        "vsql": {
+          "source_name": "vsql",
+          "data_type": "text"
+        },
+        "isnewbill": {
+          "source_name": "isnewbill",
+          "data_type": "int"
+        }
+      },
+      "sql": "SELECT r.[formid] AS [formid],r.[appid] AS [appid],r.[isvirtualform] AS [isvirtualform],r.[virtualformtype] AS [virtualformtype],r.[vdatasource] AS [vdatasource],r.[vprimarykey] AS [vprimarykey],r.[vpkgentype] AS [vpkgentype],r.[vformtype] AS [vformtype],r.[vsql] AS [vsql],r.[isnewbill] AS [isnewbill] FROM dbo.[ModeFormExtend] r WHERE r.[formid] IN ({form_ids})",
+      "order_by": "r.[formid],r.[appid],r.[isvirtualform],r.[virtualformtype],r.[vdatasource],r.[vprimarykey],r.[vpkgentype],r.[vformtype],r.[isnewbill]",
+      "row_cap": 50000,
+      "scope_types": {
+        "form_ids": "int"
+      }
+    },
+    "workflow_report_competence": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "formid": {
+          "source_name": "formid",
+          "data_type": "int"
+        },
+        "isbill": {
+          "source_name": "isbill",
+          "data_type": "char"
+        },
+        "type": {
+          "source_name": "type",
+          "data_type": "char"
+        },
+        "objid": {
+          "source_name": "objid",
+          "data_type": "int"
+        },
+        "allowsub": {
+          "source_name": "allowsub",
+          "data_type": "char"
+        },
+        "minlevel": {
+          "source_name": "minlevel",
+          "data_type": "int"
+        },
+        "maxlevel": {
+          "source_name": "maxlevel",
+          "data_type": "int"
+        },
+        "rolelevel": {
+          "source_name": "rolelevel",
+          "data_type": "char"
+        },
+        "joblevel": {
+          "source_name": "joblevel",
+          "data_type": "char"
+        },
+        "joblevelobjid": {
+          "source_name": "joblevelobjid",
+          "data_type": "varchar"
+        },
+        "competencelevel": {
+          "source_name": "competencelevel",
+          "data_type": "char"
+        },
+        "competenceobjid": {
+          "source_name": "competenceobjid",
+          "data_type": "varchar"
+        },
+        "dimension": {
+          "source_name": "dimension",
+          "data_type": "char"
+        },
+        "dimensionval": {
+          "source_name": "dimensionval",
+          "data_type": "varchar"
+        },
+        "allowlook": {
+          "source_name": "allowlook",
+          "data_type": "char"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[formid] AS [formid],r.[isbill] AS [isbill],r.[type] AS [type],r.[objid] AS [objid],r.[allowsub] AS [allowsub],r.[minlevel] AS [minlevel],r.[maxlevel] AS [maxlevel],r.[rolelevel] AS [rolelevel],r.[joblevel] AS [joblevel],r.[joblevelobjid] AS [joblevelobjid],r.[competencelevel] AS [competencelevel],r.[competenceobjid] AS [competenceobjid],r.[dimension] AS [dimension],r.[dimensionval] AS [dimensionval],r.[allowlook] AS [allowlook] FROM dbo.workflow_report_competence r WHERE EXISTS (SELECT 1 FROM dbo.workflow_base w WHERE r.formid=w.formid AND r.isbill=w.isbill)",
+      "order_by": "r.[id]",
+      "row_cap": 50000
+    },
+    "Workflow_ReportType": {
+      "columns": {
+        "id": {
+          "source_name": "id",
+          "data_type": "int"
+        },
+        "typename": {
+          "source_name": "typename",
+          "data_type": "varchar"
+        },
+        "typedesc": {
+          "source_name": "typedesc",
+          "data_type": "varchar"
+        },
+        "typeorder_bak": {
+          "source_name": "typeorder_bak",
+          "data_type": "int"
+        },
+        "typeorder": {
+          "source_name": "typeorder",
+          "data_type": "decimal"
+        }
+      },
+      "sql": "SELECT r.[id] AS [id],r.[typename] AS [typename],r.[typedesc] AS [typedesc],r.[typeorder_bak] AS [typeorder_bak],r.[typeorder] AS [typeorder] FROM dbo.Workflow_ReportType r WHERE r.id IN ({type_ids})",
+      "order_by": "r.[id]",
+      "row_cap": 50000,
+      "scope_types": {
+        "type_ids": "int"
+      }
+    }
+  },
+  "metadata_sources": [],
+  "source_keys": {
+    "B06_modeinfo": [
+      "id"
+    ],
+    "B06_workflow_bill": [
+      "id"
+    ],
+    "B06_workflow_billfield": [
+      "id"
+    ],
+    "B06_Workflow_billdetailtable": [
+      "id"
+    ],
+    "B06_workflow_formbase": [
+      "id"
+    ],
+    "B06_workflow_formfield": [
+      "formid",
+      "fieldid",
+      "fieldparameter",
+      "ismultirows",
+      "fieldorder",
+      "isdetail",
+      "groupId",
+      "fieldgroupid"
+    ],
+    "B06_workflow_formdict": [
+      "id"
+    ],
+    "B06_workflow_formdictdetail": [
+      "id"
+    ],
+    "B06_workflow_fieldlable": [
+      "formid",
+      "fieldid",
+      "fieldlable",
+      "langurageid",
+      "isdefault"
+    ],
+    "B06_HtmlLabelInfo": [
+      "indexid",
+      "languageid",
+      "labelname"
+    ],
+    "Workflow_Report": [
+      "id"
+    ],
+    "workflow_customreport": [
+      "id"
+    ],
+    "mode_report": [
+      "id"
+    ],
+    "mode_customsearch": [
+      "id"
+    ],
+    "Workflow_ReportDspField": [
+      "id"
+    ],
+    "WorkflowReportShare": [
+      "id"
+    ],
+    "WorkflowRptCondMould": [
+      "id"
+    ],
+    "WorkflowRptCondMouldDetail": [
+      "id"
+    ],
+    "workflow_customreport_field": [
+      "reportid",
+      "fieldid",
+      "tablename",
+      "isdetail",
+      "isshow",
+      "showorder",
+      "colwidth",
+      "isgroup",
+      "sortby",
+      "sortOrder"
+    ],
+    "workflow_customreport_project": [
+      "id"
+    ],
+    "workflow_customreport_share": [
+      "id"
+    ],
+    "workflow_customreport_template": [
+      "id"
+    ],
+    "workflow_customreport_tfield": [
+      "templateid",
+      "fieldid",
+      "opt1",
+      "value1",
+      "opt2",
+      "value2"
+    ],
+    "mode_ReportDspField": [
+      "id"
+    ],
+    "mode_reportshareinfo": [
+      "id"
+    ],
+    "mode_CustomDspField": [
+      "id"
+    ],
+    "mode_customsearchgroup": [
+      "id"
+    ],
+    "mode_quicksearch_condition": [
+      "id"
+    ],
+    "mode_searchPageshareinfo": [
+      "id"
+    ],
+    "ModeFormExtend": [
+      "formid",
+      "appid",
+      "isvirtualform",
+      "virtualformtype",
+      "vdatasource",
+      "vprimarykey",
+      "vpkgentype",
+      "vformtype",
+      "vsql",
+      "isnewbill"
+    ],
+    "workflow_report_competence": [
+      "id"
+    ],
+    "Workflow_ReportType": [
+      "id"
+    ],
+    "Workflow_Report_scope": [
+      "id"
+    ],
+    "workflow_customreport_scope": [
+      "id"
+    ],
+    "modeinfo": [
+      "id"
+    ]
+  },
+  "normalizer_support_files": [
+    "categories/b02.py",
+    "categories/b04.py",
+    "categories/b05.py",
+    "sql_refs.py",
+    "../oa-workflow-analyzer/src/oa_workflow_analyzer/scripts.py",
+    "../oa-workflow-analyzer/src/oa_workflow_analyzer/normalize.py"
+  ]
+}

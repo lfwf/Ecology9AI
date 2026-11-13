@@ -1,0 +1,6 @@
+_work/
+reports/
+dist/
+__pycache__/
+*.py[cod]
+.venv/

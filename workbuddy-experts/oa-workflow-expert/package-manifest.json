@@ -1,0 +1,103 @@
+{
+  "format": "workbuddy-expert-package-manifest-v1",
+  "name": "oa-workflow-expert",
+  "version": "1.0.0",
+  "files": {
+    ".codebuddy-plugin/plugin.json": {
+      "size": 2488,
+      "sha256": "8cf8112eccc01a8751c9682752ad409037ac5975d6a12f0ae0be005607e1296d"
+    },
+    "agents/oa-workflow-analyst.md": {
+      "size": 5489,
+      "sha256": "89a04a065c0341d21bcaa0170d940bc231bf6b15a96a88aee20d8538471542c3"
+    },
+    "avatars/expert.png": {
+      "size": 436642,
+      "sha256": "3ce6f25b5d7ecda927bbca23d64af302df308062493c7bbe8cd366ac66bb5947"
+    },
+    "README.md": {
+      "size": 4708,
+      "sha256": "7a8bf7e5efff31f068d282c76a341c450bf30ed6ba1a39184e631a0b8390ad5f"
+    },
+    "skills/oa-workflow-analysis/references/analysis-guide.md": {
+      "size": 7778,
+      "sha256": "6a6c6fb3505c4fb7e6d1ed2dfbadbd9897ffb2d0b83b0c70a7754c221c5cb08f"
+    },
+    "skills/oa-workflow-analysis/references/review-checklist-v2.md": {
+      "size": 20752,
+      "sha256": "320f6b9b9cf3ffdc5bd5e4377536e11bb4629af56c56839f27469666d8492028"
+    },
+    "skills/oa-workflow-analysis/references/review-method.md": {
+      "size": 3694,
+      "sha256": "6d3cddf0f70752691ef4c765ffaf46f20a46f1c5d699edf4332ca3c8dd2a73d1"
+    },
+    "skills/oa-workflow-analysis/references/semantic-checks.md": {
+      "size": 2970,
+      "sha256": "276ad65f8c608718c46814e492e887889ebee46414922ec2c95fa15d63987d19"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/AGENT_GUIDE.md": {
+      "size": 10242,
+      "sha256": "83bb7e4bb57867b9d122e8d69b2e4887fbc8ccde0d6ef6241a94ca51837a311c"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/pyproject.toml": {
+      "size": 568,
+      "sha256": "63d8eca66431846f5eaa8e79973a4000ea947955a61d6df3b446061b828aa3a1"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/run.py": {
+      "size": 484,
+      "sha256": "e835a2fb0f50a0de3798a03345caad5610a81d65af1b06a17948112fe95f4803"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/__init__.py": {
+      "size": 552,
+      "sha256": "450bfb62a471019e30a15581f45aa6d86303e267c3feff033aa020a7dd4762a8"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/__main__.py": {
+      "size": 48,
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/analyzer.py": {
+      "size": 16043,
+      "sha256": "b9f4648952f6b651c9077d8579fb059b7134b7f22c43e5c49e9ad5925cea54e9"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/archive.py": {
+      "size": 12214,
+      "sha256": "d4bc8ba5ca67d498be569022b3b2f954e08972171a96d77b3bb4e580da5e4da3"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/cli.py": {
+      "size": 4286,
+      "sha256": "309edd192747f713058fbb02e43cb418bfee38befd6e7c2464a6a00d1f59a88a"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/normalize.py": {
+      "size": 27127,
+      "sha256": "904e8172fd60ec7ccf340952d0ba51a6590305bd094d1d7fde5e02a47f5b0b0b"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/output.py": {
+      "size": 5905,
+      "sha256": "3a3aaed6dbac6e121e5594f417bf85eb6b467bdf52db7baff415d1ace38378a2"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/reports.py": {
+      "size": 42310,
+      "sha256": "058bf4aea9e2ac7650ffd118b7ecb7491d518adc129947f2f288a1380ba65384"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/schemas/workflow.schema.json": {
+      "size": 23597,
+      "sha256": "c31c581b16346a7423806a2f8b60433975e9938ad4dd07d5ef968a182fd520db"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/src/oa_workflow_analyzer/scripts.py": {
+      "size": 25575,
+      "sha256": "c8730c946d2dbcdb2aa43c65bd8f69ed98002febd66398ebe9c55eb7d3b042c5"
+    },
+    "skills/oa-workflow-analysis/scripts/analyzer/解析流程.cmd": {
+      "size": 359,
+      "sha256": "0bb30fe6b30a8fbbc2b315092d545c9a8b095b19d39f7085ce51222283585b2b"
+    },
+    "skills/oa-workflow-analysis/scripts/inspect_workflow.py": {
+      "size": 10969,
+      "sha256": "5785e4e817882b540a29363339082146f327fb52e96e1976e60e39997055ab3e"
+    },
+    "skills/oa-workflow-analysis/SKILL.md": {
+      "size": 7312,
+      "sha256": "da3fcdeae02716cd8e6b15d9169e48c5b63acc08d3ff8bac121d1fa39017ac86"
+    }
+  }
+}

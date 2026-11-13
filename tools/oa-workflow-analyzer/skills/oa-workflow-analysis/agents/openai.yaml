@@ -1,0 +1,4 @@
+interface:
+  display_name: "OA 流程分析"
+  short_description: "还原泛微流程说明书，借助质量清单查漏补缺，将问题与优化建议融入同一文档"
+  default_prompt: "使用 $oa-workflow-analysis 分析这个 .wewf 文件，参考质量清单查漏补缺，把相关问题、影响和优化方向整合到分析结论中，最终给我一份中文流程说明书。"

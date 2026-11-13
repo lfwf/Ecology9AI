@@ -1,0 +1,18 @@
+{
+  "format_version": 1,
+  "roots": [
+    {
+      "path": "./examples/oa-source",
+      "kind": "source"
+    }
+  ],
+  "compiled_dependency_prefixes": [
+    "example."
+  ],
+  "limits": {
+    "max_files": 600,
+    "max_depth": 12,
+    "max_file_bytes": 3000000,
+    "max_total_bytes": 50000000
+  }
+}
